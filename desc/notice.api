@@ -1,0 +1,11 @@
+syntax = "v1"
+
+@server(
+    group: notice
+)
+
+service App {
+    // 获取最新公告接口
+    @handler notice
+    post /notice returns (BaseDataInfo)
+}

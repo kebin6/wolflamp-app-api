@@ -1,0 +1,122 @@
+syntax = "v1"
+
+// 验证码请求体
+type CaptchaReq {
+    Email string `json:"email" validate:"required,email,max=100"`
+}
+
+// 玩家信息
+type PlayerInfo {
+    // 玩家ID
+    Id uint64 `json:"id"`
+    // 邮箱
+    Email string `json:"email"`
+    // 邀请码
+    InviteCode string `json:"inviteCode"`
+    // 币剩余量
+    Amount float64 `json:"amount"`
+    // 羊剩余量
+    Lamp float32 `json:"lamb"`
+    // 代理等级
+    Rank uint32 `json:"rank"`
+}
+
+// 登陆信息
+type LoginInfo {
+    // 玩家信息
+    Info PlayerInfo `json:"info"`
+    // 登陆token
+    Token string `json:"token"`
+}
+
+// 注册接口请求体
+type RegisterReq {
+    // 邮箱
+    Email string `json:"email" validate:"required,email,max=100"`
+    // 密码
+    Password string `json:"password" validate:"required,max=30,min=6"`
+    // 验证码
+    CaptchaCode string `json:"captchaCode" validate:"required,len=6"`
+    // 邀请码
+    InvitedCode string `json:"invitedCode" validate:"required,len=7"`
+}
+
+// 登陆接口请求体
+type LoginReq {
+    // 邮箱
+    Email string `json:"email" validate:"required,email,max=100"`
+    // 密码
+    Password string `json:"password" validate:"required,max=30,min=6"`
+}
+
+// 登陆接口响应体
+type LoginResp {
+    BaseDataInfo
+    // 登陆信息
+    Data LoginInfo `json:"data"`
+}
+
+// 个人信息接口响应体
+type PersonInfoResp {
+    BaseDataInfo
+    // 个人信息
+    Data PlayerInfo `json:"data"`
+}
+
+// 修改密码接口请求体
+type ChangePasswordReq {
+    // 邮箱
+    Email string `json:"email" validate:"required,email,max=100"`
+    // 旧密码
+    OldPassword string `json:"oldPassword" validate:"required"`
+    // 新密码
+    NewPassword string `json:"newPassword" validate:"required,max=30,min=6"`
+    // 验证码
+    CaptchaCode string `json:"captchaCode" validate:"required,len=6"`
+}
+
+
+type ShareResp {
+    BaseDataInfo
+    //QrCodeSource string `json:"qr_code_source"`
+    // 分享链接
+    Data string `json:"data"`
+}
+
+@server(
+    group: player
+)
+
+service App {
+    // 获取验证码接口
+    @handler captcha
+    post /captcha (CaptchaReq) returns (BaseMsgResp)
+
+    // 注册接口（注册后默认自动登陆）
+    @handler register
+    post /register (RegisterReq) returns (LoginResp)
+
+    // 登陆接口
+    @handler login
+    post /login (LoginReq) returns (LoginResp)
+
+    // 忘记密码接口（修改完密码以后会返回新的登陆信息）
+    @handler forgetPassword
+    post /change (ChangePasswordReq) returns (LoginResp)
+}
+
+
+@server(
+    jwt: Auth
+    group: player
+)
+
+service App {
+    // 获取个人信息接口（前置条件：登陆）
+    @handler personInfo
+    post /person returns (PersonInfoResp)
+    // 获取分享链接接口（前置条件：登陆）
+    @handler share
+    post /share returns (ShareResp)
+
+}

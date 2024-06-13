@@ -1,0 +1,66 @@
+Name: App.api
+Host: 0.0.0.0
+Port: 8080
+Timeout: 2000
+SIMPLE_LANG: en
+
+Auth:
+  AccessSecret: jS6VKDtsJf3z1n2VKDtsJf3z1n2
+  AccessExpire: 86400
+
+CROSConf:
+  Address: '*'
+
+Log:
+  ServiceName: AppApiLogger
+  Mode: file
+  Path: /home/data/logs
+  Level: info
+  Compress: false
+  KeepDays: 7
+  StackCoolDownMillis: 100
+
+RedisConf:
+  Db: 0
+  Host: redis:6379
+  Pass: ewYGaN@9uXKP
+
+CasbinDatabaseConf:
+  Type: mysql
+  Host: mysql
+  Port: 3306
+  DBName: solamb
+  Username: solamb
+  Password: 8KbDVUAr5J#b
+  MaxOpenConn: 100
+  SSLMode: disable
+  CacheTime: 5
+
+CasbinConf:
+  ModelText: |
+    [request_definition]
+    r = sub, obj, act
+    [policy_definition]
+    p = sub, obj, act
+    [role_definition]
+    g = _, _
+    [policy_effect]
+    e = some(where (p.eft == allow))
+    [matchers]
+    m = r.sub == p.sub && keyMatch2(r.obj,p.obj) && r.act == p.act
+
+ProjectConf:
+  EmailCaptchaExpiredTime: 600 # the expired time for email captcha
+  ShareLink: "http://http://8.138.124.190/share?invite=%s"
+  Network: "BNB Smart Chain Mainnet"
+
+McmsRpc:
+  Endpoints:
+    - message-rpc:9106
+  Enabled: true
+  Timeout: 5000
+
+WolfLampRpc:
+  Endpoints:
+    - solamb-rpc:7002
+  Enabled: true

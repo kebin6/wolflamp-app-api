@@ -1,0 +1,96 @@
+syntax = "v1"
+
+type (
+    // 兑换请求体
+    ExchangeReq {
+        // type | 兑换类型：1=币兑羊；2=羊兑币
+        Type uint32 `json:"type" validate:"required,oneof=1 2"`
+        // coin amount| 币数量
+        CoinAmount uint32 `json:"coinAmount" validate:"required,min=1"`
+        // lamb amount | 羊数量
+        LampAmount uint32 `json:"lambAmount" validate:"required,min=10"`
+    }
+
+    // 兑换响应体
+    ExchangeResp {
+        BaseDataInfo
+        // Data ｜ 兑换记录ID
+        Data  uint64 `json:"data"`
+    }
+
+    // 兑换记录详情
+    ExchangeInfo {
+        // 兑换记录ID
+        Id uint64 `json:"id"`
+        // 交易ID
+        TransactionId string `json:"transactionId"`
+        // 兑换类型：1=币兑羊；2=羊兑币
+        Type uint32 `json:"type"`
+        // 类型描述
+        TypeDesc string `json:"typeDesc"`
+        // 币数量
+        CoinAmount uint32 `json:"coinAmount"`
+        // 羊数量
+        LampAmount uint32 `json:"lambAmount"`
+        // 创建时间
+        CreateAt int64 `json:"createAt"`
+        // 状态：1=完成
+        Status uint32 `json:"status"`
+        // 状态描述
+        StatusDesc string `json:"statusDesc"`
+    }
+
+    // 兑换记录详情请求体
+    FindExchangeReq {
+        // Id
+        Id  uint64 `json:"id"`
+    }
+
+    // 兑换记录详情响应体
+    FindExchangeResp {
+        BaseDataInfo
+        // 兑换记录详情
+        Data  ExchangeInfo `json:"data"`
+    }
+
+    // 兑换记录列表请求体
+    ListExchangeReq {
+        PageInfo
+    }
+
+    // 兑换记录列表响应体
+    ListExchangeResp {
+        BaseDataInfo
+
+        // 兑换记录列表响应体数据
+        Data  ListExchangeInfo `json:"data"`
+    }
+
+    // 兑换记录列表响应体数据
+    ListExchangeInfo {
+        BaseListInfo
+
+        // 兑换记录列表
+        Data  []ExchangeInfo  `json:"data"`
+    }
+)
+
+@server(
+    jwt: Auth
+    group: exchange
+    prefix: exchange
+)
+
+service App {
+    // Exchange Coin To Lamb or Exchange Lamb To Coin | 兑换接口（前置条件：登陆）
+    @handler exchange
+    post / (ExchangeReq) returns (ExchangeResp)
+
+    // Get Exchange Log List | 兑换记录列表（前置条件：登陆）
+    @handler list
+    post /list (ListExchangeReq) returns (ListExchangeResp)
+
+    // Get Exchange Log Info | 兑换记录详情（前置条件：登陆）
+    @handler find
+    post /find (FindExchangeReq) returns (FindExchangeResp)
+}

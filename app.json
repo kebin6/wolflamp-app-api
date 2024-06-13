@@ -1,0 +1,2296 @@
+{
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "swagger": "2.0",
+  "info": {
+    "description": "Description: app service",
+    "title": "app",
+    "version": "0.0.1"
+  },
+  "host": "localhost:8080",
+  "basePath": "/",
+  "paths": {
+    "/captcha": {
+      "post": {
+        "description": "获取验证码接口",
+        "tags": [
+          "player"
+        ],
+        "summary": "获取验证码接口",
+        "operationId": "Captcha",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/CaptchaReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "BaseMsgResp",
+            "schema": {
+              "$ref": "#/definitions/BaseMsgResp"
+            }
+          }
+        }
+      }
+    },
+    "/change": {
+      "post": {
+        "description": "忘记密码接口（修改完密码以后会返回新的登陆信息）",
+        "tags": [
+          "player"
+        ],
+        "summary": "忘记密码接口（修改完密码以后会返回新的登陆信息）",
+        "operationId": "ForgetPassword",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/ChangePasswordReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "LoginResp",
+            "schema": {
+              "$ref": "#/definitions/LoginResp"
+            }
+          }
+        }
+      }
+    },
+    "/exchange": {
+      "post": {
+        "description": "Exchange Coin To Lamb or Exchange Lamb To Coin | 兑换接口（前置条件：登陆）",
+        "tags": [
+          "exchange"
+        ],
+        "summary": "Exchange Coin To Lamb or Exchange Lamb To Coin | 兑换接口（前置条件：登陆）",
+        "operationId": "Exchange",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/ExchangeReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ExchangeResp",
+            "schema": {
+              "$ref": "#/definitions/ExchangeResp"
+            }
+          }
+        }
+      }
+    },
+    "/exchange/find": {
+      "post": {
+        "description": "Get Exchange Log Info | 兑换记录详情（前置条件：登陆）",
+        "tags": [
+          "exchange"
+        ],
+        "summary": "Get Exchange Log Info | 兑换记录详情（前置条件：登陆）",
+        "operationId": "Find",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/FindExchangeReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "FindExchangeResp",
+            "schema": {
+              "$ref": "#/definitions/FindExchangeResp"
+            }
+          }
+        }
+      }
+    },
+    "/exchange/list": {
+      "post": {
+        "description": "Get Exchange Log List | 兑换记录列表（前置条件：登陆）",
+        "tags": [
+          "exchange"
+        ],
+        "summary": "Get Exchange Log List | 兑换记录列表（前置条件：登陆）",
+        "operationId": "List",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/ListExchangeReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ListExchangeResp",
+            "schema": {
+              "$ref": "#/definitions/ListExchangeResp"
+            }
+          }
+        }
+      }
+    },
+    "/game": {
+      "post": {
+        "description": "获取游戏盘口数据接口",
+        "tags": [
+          "game"
+        ],
+        "summary": "获取游戏盘口数据接口",
+        "operationId": "GetRoundInfo",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/RoundReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "RoundResp",
+            "schema": {
+              "$ref": "#/definitions/RoundResp"
+            }
+          }
+        }
+      }
+    },
+    "/game/invest": {
+      "post": {
+        "description": "投注接口",
+        "tags": [
+          "game"
+        ],
+        "summary": "投注接口",
+        "operationId": "Invest",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/InvestReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "BaseDataInfo",
+            "schema": {
+              "$ref": "#/definitions/BaseDataInfo"
+            }
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "description": "登陆接口",
+        "tags": [
+          "player"
+        ],
+        "summary": "登陆接口",
+        "operationId": "Login",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/LoginReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "LoginResp",
+            "schema": {
+              "$ref": "#/definitions/LoginResp"
+            }
+          }
+        }
+      }
+    },
+    "/notice": {
+      "post": {
+        "description": "获取最新公告接口",
+        "tags": [
+          "notice"
+        ],
+        "summary": "获取最新公告接口",
+        "operationId": "Notice",
+        "responses": {
+          "200": {
+            "description": "BaseDataInfo",
+            "schema": {
+              "$ref": "#/definitions/BaseDataInfo"
+            }
+          }
+        }
+      }
+    },
+    "/order/find": {
+      "post": {
+        "description": "订单详情接口（前置条件：登陆）",
+        "tags": [
+          "order"
+        ],
+        "summary": "订单详情接口（前置条件：登陆）",
+        "operationId": "Find",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/FindOrderReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "FindOrderResp",
+            "schema": {
+              "$ref": "#/definitions/FindOrderResp"
+            }
+          }
+        }
+      }
+    },
+    "/order/list": {
+      "post": {
+        "description": "订单列表接口（前置条件：登陆）",
+        "tags": [
+          "order"
+        ],
+        "summary": "订单列表接口（前置条件：登陆）",
+        "operationId": "List",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/ListOrderReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ListOrderResp",
+            "schema": {
+              "$ref": "#/definitions/ListOrderResp"
+            }
+          }
+        }
+      }
+    },
+    "/person": {
+      "post": {
+        "description": "获取个人信息接口（前置条件：登陆）",
+        "tags": [
+          "player"
+        ],
+        "summary": "获取个人信息接口（前置条件：登陆）",
+        "operationId": "PersonInfo",
+        "responses": {
+          "200": {
+            "description": "PersonInfoResp",
+            "schema": {
+              "$ref": "#/definitions/PersonInfoResp"
+            }
+          }
+        }
+      }
+    },
+    "/register": {
+      "post": {
+        "description": "注册接口（注册后默认自动登陆）",
+        "tags": [
+          "player"
+        ],
+        "summary": "注册接口（注册后默认自动登陆）",
+        "operationId": "Register",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/RegisterReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "LoginResp",
+            "schema": {
+              "$ref": "#/definitions/LoginResp"
+            }
+          }
+        }
+      }
+    },
+    "/reward/find": {
+      "post": {
+        "description": "Get Reward Log Info | 奖励详情（前置条件：登陆）",
+        "tags": [
+          "reward"
+        ],
+        "summary": "Get Reward Log Info | 奖励详情（前置条件：登陆）",
+        "operationId": "Find",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/FindRewardReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "FindRewardResp",
+            "schema": {
+              "$ref": "#/definitions/FindRewardResp"
+            }
+          }
+        }
+      }
+    },
+    "/reward/list": {
+      "post": {
+        "description": "Get Reward Log List | 奖励列表（前置条件：登陆）",
+        "tags": [
+          "reward"
+        ],
+        "summary": "Get Reward Log List | 奖励列表（前置条件：登陆）",
+        "operationId": "List",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/ListRewardReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ListRewardResp",
+            "schema": {
+              "$ref": "#/definitions/ListRewardResp"
+            }
+          }
+        }
+      }
+    },
+    "/share": {
+      "post": {
+        "description": "获取分享链接接口（前置条件：登陆）",
+        "tags": [
+          "player"
+        ],
+        "summary": "获取分享链接接口（前置条件：登陆）",
+        "operationId": "Share",
+        "responses": {
+          "200": {
+            "description": "ShareResp",
+            "schema": {
+              "$ref": "#/definitions/ShareResp"
+            }
+          }
+        }
+      }
+    },
+    "/transaction_password/update": {
+      "post": {
+        "description": "设置交易密码接口（前置条件：登陆）",
+        "tags": [
+          "wallet"
+        ],
+        "summary": "设置交易密码接口（前置条件：登陆）",
+        "operationId": "TransactionPassword",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/TransactionPasswordReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "BaseMsgResp",
+            "schema": {
+              "$ref": "#/definitions/BaseMsgResp"
+            }
+          }
+        }
+      }
+    },
+    "/transaction_password/verify": {
+      "post": {
+        "description": "校验交易密码是否正确接口（前置条件：登陆）",
+        "tags": [
+          "wallet"
+        ],
+        "summary": "校验交易密码是否正确接口（前置条件：登陆）",
+        "operationId": "VerifyTransactionPassword",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/VerifyTransactionPasswordReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "BaseMsgResp",
+            "schema": {
+              "$ref": "#/definitions/BaseMsgResp"
+            }
+          }
+        }
+      }
+    },
+    "/wallet": {
+      "post": {
+        "description": "获取钱包详情接口（前置条件：登陆）",
+        "tags": [
+          "wallet"
+        ],
+        "summary": "获取钱包详情接口（前置条件：登陆）",
+        "operationId": "Wallet",
+        "responses": {
+          "200": {
+            "description": "WalletResp",
+            "schema": {
+              "$ref": "#/definitions/WalletResp"
+            }
+          }
+        }
+      }
+    },
+    "/withdraw": {
+      "post": {
+        "description": "提币接口（前置条件：登陆）",
+        "tags": [
+          "wallet"
+        ],
+        "summary": "提币接口（前置条件：登陆）",
+        "operationId": "Withdraw",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/WithdrawReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "WithdrawResp",
+            "schema": {
+              "$ref": "#/definitions/WithdrawResp"
+            }
+          }
+        }
+      }
+    },
+    "/withdraw/estimate": {
+      "post": {
+        "description": "预算提币各项费用接口（前置条件：登陆）",
+        "tags": [
+          "wallet"
+        ],
+        "summary": "预算提币各项费用接口（前置条件：登陆）",
+        "operationId": "EstimateWithdraw",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/EstimateWithdrawReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "EstimateWithdrawResp",
+            "schema": {
+              "$ref": "#/definitions/EstimateWithdrawResp"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "BaseDataInfo": {
+      "description": "The basic response with data | 基础带数据信息",
+      "type": "object",
+      "properties": {
+        "code": {
+          "description": "Error code | 错误代码",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Code"
+        },
+        "data": {
+          "description": "Data | 数据",
+          "type": "string",
+          "x-go-name": "Data"
+        },
+        "msg": {
+          "description": "Message | 提示信息",
+          "type": "string",
+          "x-go-name": "Msg"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "BaseIDInfo": {
+      "description": "The base ID response data | 基础ID信息",
+      "type": "object",
+      "properties": {
+        "createdAt": {
+          "description": "Create date | 创建日期",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "CreatedAt"
+        },
+        "id": {
+          "description": "ID",
+          "type": "integer",
+          "format": "uint64",
+          "x-go-name": "Id"
+        },
+        "updatedAt": {
+          "description": "Update date | 更新日期",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "UpdatedAt"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "BaseIDInt32Info": {
+      "description": "The base ID response data (int32) | 基础ID信息 (int32)",
+      "type": "object",
+      "properties": {
+        "createdAt": {
+          "description": "Create date | 创建日期",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "CreatedAt"
+        },
+        "id": {
+          "description": "ID",
+          "type": "integer",
+          "format": "int32",
+          "x-go-name": "Id"
+        },
+        "updatedAt": {
+          "description": "Update date | 更新日期",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "UpdatedAt"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "BaseIDInt64Info": {
+      "description": "The base ID response data (int64) | 基础ID信息 (int64)",
+      "type": "object",
+      "properties": {
+        "createdAt": {
+          "description": "Create date | 创建日期",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "CreatedAt"
+        },
+        "id": {
+          "description": "ID",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Id"
+        },
+        "updatedAt": {
+          "description": "Update date | 更新日期",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "UpdatedAt"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "BaseIDUint32Info": {
+      "description": "The base ID response data (uint32) | 基础ID信息 (uint32)",
+      "type": "object",
+      "properties": {
+        "createdAt": {
+          "description": "Create date | 创建日期",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "CreatedAt"
+        },
+        "id": {
+          "description": "ID",
+          "type": "integer",
+          "format": "uint32",
+          "x-go-name": "Id"
+        },
+        "updatedAt": {
+          "description": "Update date | 更新日期",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "UpdatedAt"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "BaseListInfo": {
+      "description": "The basic response with data | 基础带数据信息",
+      "type": "object",
+      "properties": {
+        "data": {
+          "description": "Data | 数据",
+          "type": "string",
+          "x-go-name": "Data"
+        },
+        "total": {
+          "description": "The total number of data | 数据总数",
+          "type": "integer",
+          "format": "uint64",
+          "x-go-name": "Total"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "BaseMsgResp": {
+      "description": "The basic response without data | 基础不带数据信息",
+      "type": "object",
+      "properties": {
+        "code": {
+          "description": "Error code | 错误代码",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Code"
+        },
+        "msg": {
+          "description": "Message | 提示信息",
+          "type": "string",
+          "x-go-name": "Msg"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "BaseUUIDInfo": {
+      "description": "The base UUID response data | 基础UUID信息",
+      "type": "object",
+      "properties": {
+        "createdAt": {
+          "description": "Create date | 创建日期",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "CreatedAt"
+        },
+        "id": {
+          "description": "ID",
+          "type": "string",
+          "x-go-name": "Id"
+        },
+        "updatedAt": {
+          "description": "Update date | 更新日期",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "UpdatedAt"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "CaptchaReq": {
+      "description": "验证码请求体",
+      "type": "object",
+      "required": [
+        "email"
+      ],
+      "properties": {
+        "email": {
+          "type": "string",
+          "maxLength": 100,
+          "x-go-name": "Email"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "ChangePasswordReq": {
+      "description": "修改密码接口请求体",
+      "type": "object",
+      "required": [
+        "email",
+        "oldPassword",
+        "newPassword",
+        "captchaCode"
+      ],
+      "properties": {
+        "captchaCode": {
+          "description": "验证码",
+          "type": "string",
+          "maxLength": 6,
+          "minLength": 6,
+          "x-go-name": "CaptchaCode"
+        },
+        "email": {
+          "description": "邮箱",
+          "type": "string",
+          "maxLength": 100,
+          "x-go-name": "Email"
+        },
+        "newPassword": {
+          "description": "新密码",
+          "type": "string",
+          "maxLength": 30,
+          "minLength": 6,
+          "x-go-name": "NewPassword"
+        },
+        "oldPassword": {
+          "description": "旧密码",
+          "type": "string",
+          "x-go-name": "OldPassword"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "EstimateWithdrawDataInfo": {
+      "description": "预算提币各项费用",
+      "type": "object",
+      "properties": {
+        "amount": {
+          "description": "提币数量",
+          "type": "number",
+          "format": "double",
+          "x-go-name": "Amount"
+        },
+        "handingFee": {
+          "description": "提币手续费",
+          "type": "number",
+          "format": "double",
+          "x-go-name": "HandingFee"
+        },
+        "receivedAmount": {
+          "description": "提币实际到账数量",
+          "type": "number",
+          "format": "double",
+          "x-go-name": "ReceivedAmount"
+        },
+        "totalAmount": {
+          "description": "总扣除费用",
+          "type": "number",
+          "format": "double",
+          "x-go-name": "TotalAmount"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "EstimateWithdrawReq": {
+      "description": "预算提币请求体",
+      "type": "object",
+      "required": [
+        "amount"
+      ],
+      "properties": {
+        "amount": {
+          "description": "提币数量",
+          "type": "number",
+          "format": "double",
+          "x-go-name": "Amount"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "EstimateWithdrawResp": {
+      "description": "预算提币各项费用响应体",
+      "type": "object",
+      "properties": {
+        "code": {
+          "description": "Error code | 错误代码",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Code"
+        },
+        "data": {
+          "description": "Data | 数据",
+          "type": "string",
+          "x-go-name": "Data",
+          "$ref": "#/definitions/EstimateWithdrawDataInfo"
+        },
+        "msg": {
+          "description": "Message | 提示信息",
+          "type": "string",
+          "x-go-name": "Msg"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "ExchangeInfo": {
+      "description": "兑换记录详情",
+      "type": "object",
+      "properties": {
+        "coinAmount": {
+          "description": "币数量",
+          "type": "integer",
+          "format": "uint32",
+          "x-go-name": "CoinAmount"
+        },
+        "createAt": {
+          "description": "创建时间",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "CreateAt"
+        },
+        "id": {
+          "description": "兑换记录ID",
+          "type": "integer",
+          "format": "uint64",
+          "x-go-name": "Id"
+        },
+        "lambAmount": {
+          "description": "羊数量",
+          "type": "integer",
+          "format": "uint32",
+          "x-go-name": "LampAmount"
+        },
+        "status": {
+          "description": "状态：1=完成",
+          "type": "integer",
+          "format": "uint32",
+          "x-go-name": "Status"
+        },
+        "statusDesc": {
+          "description": "状态描述",
+          "type": "string",
+          "x-go-name": "StatusDesc"
+        },
+        "transactionId": {
+          "description": "交易ID",
+          "type": "string",
+          "x-go-name": "TransactionId"
+        },
+        "type": {
+          "description": "兑换类型：1=币兑羊；2=羊兑币",
+          "type": "integer",
+          "format": "uint32",
+          "x-go-name": "Type"
+        },
+        "typeDesc": {
+          "description": "类型描述",
+          "type": "string",
+          "x-go-name": "TypeDesc"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "ExchangeReq": {
+      "description": "兑换请求体",
+      "type": "object",
+      "required": [
+        "type",
+        "coinAmount",
+        "lambAmount"
+      ],
+      "properties": {
+        "coinAmount": {
+          "description": "coin amount| 币数量",
+          "type": "integer",
+          "format": "uint32",
+          "minLength": 1,
+          "x-go-name": "CoinAmount"
+        },
+        "lambAmount": {
+          "description": "lamb amount | 羊数量",
+          "type": "integer",
+          "format": "uint32",
+          "minLength": 10,
+          "x-go-name": "LampAmount"
+        },
+        "type": {
+          "description": "type | 兑换类型：1=币兑羊；2=羊兑币",
+          "type": "integer",
+          "format": "uint32",
+          "x-go-name": "Type"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "ExchangeResp": {
+      "description": "兑换响应体",
+      "type": "object",
+      "properties": {
+        "code": {
+          "description": "Error code | 错误代码",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Code"
+        },
+        "data": {
+          "description": "Data ｜ 兑换记录ID",
+          "type": "integer",
+          "format": "uint64",
+          "x-go-name": "Data"
+        },
+        "msg": {
+          "description": "Message | 提示信息",
+          "type": "string",
+          "x-go-name": "Msg"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "FindExchangeReq": {
+      "description": "兑换记录详情请求体",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Id",
+          "type": "integer",
+          "format": "uint64",
+          "x-go-name": "Id"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "FindExchangeResp": {
+      "description": "兑换记录详情响应体",
+      "type": "object",
+      "properties": {
+        "code": {
+          "description": "Error code | 错误代码",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Code"
+        },
+        "data": {
+          "description": "Data | 数据",
+          "type": "string",
+          "x-go-name": "Data",
+          "$ref": "#/definitions/ExchangeInfo"
+        },
+        "msg": {
+          "description": "Message | 提示信息",
+          "type": "string",
+          "x-go-name": "Msg"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "FindOrderReq": {
+      "description": "订单详情请求体",
+      "type": "object",
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "id": {
+          "description": "Id",
+          "type": "integer",
+          "format": "uint64",
+          "x-go-name": "Id"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "FindOrderResp": {
+      "description": "订单详情响应体",
+      "type": "object",
+      "properties": {
+        "code": {
+          "description": "Error code | 错误代码",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Code"
+        },
+        "data": {
+          "description": "Data | 数据",
+          "type": "string",
+          "x-go-name": "Data",
+          "$ref": "#/definitions/OrderInfo"
+        },
+        "msg": {
+          "description": "Message | 提示信息",
+          "type": "string",
+          "x-go-name": "Msg"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "FindRewardReq": {
+      "description": "奖励记录详情请求体",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Id",
+          "type": "integer",
+          "format": "uint64",
+          "x-go-name": "Id"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "FindRewardResp": {
+      "description": "奖励记录详情响应体",
+      "type": "object",
+      "properties": {
+        "code": {
+          "description": "Error code | 错误代码",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Code"
+        },
+        "data": {
+          "description": "Data | 数据",
+          "type": "string",
+          "x-go-name": "Data",
+          "$ref": "#/definitions/RewardInfo"
+        },
+        "msg": {
+          "description": "Message | 提示信息",
+          "type": "string",
+          "x-go-name": "Msg"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "FoldDetail": {
+      "description": "羊圈详情",
+      "type": "object",
+      "properties": {
+        "foldNo": {
+          "description": "羊圈号码",
+          "type": "integer",
+          "format": "uint32",
+          "x-go-name": "FoldNo"
+        },
+        "lambNum": {
+          "description": "投注数量",
+          "type": "integer",
+          "format": "uint32",
+          "x-go-name": "LambNum"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "FoldInfo": {
+      "description": "羊圈详情",
+      "type": "object",
+      "properties": {
+        "fold1": {
+          "$ref": "#/definitions/FoldDetail"
+        },
+        "fold2": {
+          "$ref": "#/definitions/FoldDetail"
+        },
+        "fold3": {
+          "$ref": "#/definitions/FoldDetail"
+        },
+        "fold4": {
+          "$ref": "#/definitions/FoldDetail"
+        },
+        "fold5": {
+          "$ref": "#/definitions/FoldDetail"
+        },
+        "fold6": {
+          "$ref": "#/definitions/FoldDetail"
+        },
+        "fold7": {
+          "$ref": "#/definitions/FoldDetail"
+        },
+        "fold8": {
+          "$ref": "#/definitions/FoldDetail"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "IDInt32PathReq": {
+      "description": "Basic ID request (int32) | 基础ID地址参数请求 (int32)",
+      "type": "object",
+      "required": [
+        "Id"
+      ],
+      "properties": {
+        "Id": {
+          "description": "ID",
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "IDInt32Req": {
+      "description": "Basic ID request (int32) | 基础ID参数请求 (int32)",
+      "type": "object",
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "id": {
+          "description": "ID",
+          "type": "integer",
+          "format": "int32",
+          "x-go-name": "Id"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "IDInt64PathReq": {
+      "description": "Basic ID request (int64) | 基础ID地址参数请求 (int64)",
+      "type": "object",
+      "required": [
+        "Id"
+      ],
+      "properties": {
+        "Id": {
+          "description": "ID",
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "IDInt64Req": {
+      "description": "Basic ID request (int64) | 基础ID参数请求 (int64)",
+      "type": "object",
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "id": {
+          "description": "ID",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Id"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "IDPathReq": {
+      "description": "Basic ID request | 基础ID地址参数请求",
+      "type": "object",
+      "required": [
+        "Id"
+      ],
+      "properties": {
+        "Id": {
+          "description": "ID",
+          "type": "integer",
+          "format": "uint64"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "IDReq": {
+      "description": "Basic ID request | 基础ID参数请求",
+      "type": "object",
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "id": {
+          "description": "ID",
+          "type": "integer",
+          "format": "uint64",
+          "x-go-name": "Id"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "IDUint32PathReq": {
+      "description": "Basic ID request (uint32) | 基础ID地址参数请求 (uint32)",
+      "type": "object",
+      "required": [
+        "Id"
+      ],
+      "properties": {
+        "Id": {
+          "description": "ID",
+          "type": "integer",
+          "format": "uint32"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "IDUint32Req": {
+      "description": "Basic ID request (uint32) | 基础ID参数请求 (uint32)",
+      "type": "object",
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "id": {
+          "description": "ID",
+          "type": "integer",
+          "format": "uint32",
+          "x-go-name": "Id"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "IDsInt32Req": {
+      "description": "Basic IDs request (int32) | 基础ID数组参数请求 (int32)",
+      "type": "object",
+      "required": [
+        "ids"
+      ],
+      "properties": {
+        "ids": {
+          "description": "IDs",
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "x-go-name": "Ids"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "IDsInt64Req": {
+      "description": "Basic IDs request (int64) | 基础ID数组参数请求 (int64)",
+      "type": "object",
+      "required": [
+        "ids"
+      ],
+      "properties": {
+        "ids": {
+          "description": "IDs",
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "x-go-name": "Ids"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "IDsReq": {
+      "description": "Basic IDs request | 基础ID数组参数请求",
+      "type": "object",
+      "required": [
+        "ids"
+      ],
+      "properties": {
+        "ids": {
+          "description": "IDs",
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "uint64"
+          },
+          "x-go-name": "Ids"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "IDsUint32Req": {
+      "description": "Basic IDs request (uint32) | 基础ID数组参数请求 (uint32)",
+      "type": "object",
+      "required": [
+        "ids"
+      ],
+      "properties": {
+        "ids": {
+          "description": "IDs",
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "uint32"
+          },
+          "x-go-name": "Ids"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "InvestReq": {
+      "description": "投注请求体",
+      "type": "object",
+      "required": [
+        "roundId",
+        "foldNo",
+        "lambNum"
+      ],
+      "properties": {
+        "foldNo": {
+          "description": "羊圈号码",
+          "type": "integer",
+          "format": "uint32",
+          "x-go-name": "FoldNo"
+        },
+        "lambNum": {
+          "description": "投注数量",
+          "type": "integer",
+          "format": "uint32",
+          "x-go-name": "LambNum"
+        },
+        "roundId": {
+          "description": "当前轮数",
+          "type": "integer",
+          "format": "uint64",
+          "x-go-name": "RoundId"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "ListExchangeInfo": {
+      "description": "兑换记录列表响应体数据",
+      "type": "object",
+      "properties": {
+        "data": {
+          "description": "兑换记录列表",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ExchangeInfo"
+          },
+          "x-go-name": "Data"
+        },
+        "total": {
+          "description": "The total number of data | 数据总数",
+          "type": "integer",
+          "format": "uint64",
+          "x-go-name": "Total"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "ListExchangeReq": {
+      "description": "兑换记录列表请求体",
+      "type": "object",
+      "required": [
+        "page",
+        "pageSize"
+      ],
+      "properties": {
+        "page": {
+          "description": "Page number | 第几页",
+          "type": "integer",
+          "format": "uint64",
+          "minimum": 0,
+          "x-go-name": "Page"
+        },
+        "pageSize": {
+          "description": "Page size | 单页数据行数",
+          "type": "integer",
+          "format": "uint64",
+          "maximum": 100000,
+          "x-go-name": "PageSize"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "ListExchangeResp": {
+      "description": "兑换记录列表响应体",
+      "type": "object",
+      "properties": {
+        "code": {
+          "description": "Error code | 错误代码",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Code"
+        },
+        "data": {
+          "description": "Data | 数据",
+          "type": "string",
+          "x-go-name": "Data",
+          "$ref": "#/definitions/ListExchangeInfo"
+        },
+        "msg": {
+          "description": "Message | 提示信息",
+          "type": "string",
+          "x-go-name": "Msg"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "ListOrderInfo": {
+      "description": "订单列表数据",
+      "type": "object",
+      "properties": {
+        "data": {
+          "description": "订单列表",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OrderInfo"
+          },
+          "x-go-name": "Data"
+        },
+        "total": {
+          "description": "The total number of data | 数据总数",
+          "type": "integer",
+          "format": "uint64",
+          "x-go-name": "Total"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "ListOrderReq": {
+      "description": "订单列表请求体",
+      "type": "object",
+      "required": [
+        "page",
+        "pageSize",
+        "type"
+      ],
+      "properties": {
+        "page": {
+          "description": "Page number | 第几页",
+          "type": "integer",
+          "format": "uint64",
+          "minimum": 0,
+          "x-go-name": "Page"
+        },
+        "pageSize": {
+          "description": "Page size | 单页数据行数",
+          "type": "integer",
+          "format": "uint64",
+          "maximum": 100000,
+          "x-go-name": "PageSize"
+        },
+        "type": {
+          "description": "订单类型: deposit=充值订单；withdraw=提现订单",
+          "type": "string",
+          "x-go-name": "Type"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "ListOrderResp": {
+      "description": "订单列表响应体",
+      "type": "object",
+      "properties": {
+        "code": {
+          "description": "Error code | 错误代码",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Code"
+        },
+        "data": {
+          "description": "Data | 数据",
+          "type": "string",
+          "x-go-name": "Data",
+          "$ref": "#/definitions/ListOrderInfo"
+        },
+        "msg": {
+          "description": "Message | 提示信息",
+          "type": "string",
+          "x-go-name": "Msg"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "ListRewardInfo": {
+      "description": "奖励记录列表响应体数据",
+      "type": "object",
+      "properties": {
+        "data": {
+          "description": "兑换记录列表",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RewardInfo"
+          },
+          "x-go-name": "Data"
+        },
+        "total": {
+          "description": "The total number of data | 数据总数",
+          "type": "integer",
+          "format": "uint64",
+          "x-go-name": "Total"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "ListRewardReq": {
+      "description": "奖励记录列表请求体",
+      "type": "object",
+      "required": [
+        "page",
+        "pageSize"
+      ],
+      "properties": {
+        "contributorLevel": {
+          "description": "贡献者等级",
+          "type": "integer",
+          "format": "uint32",
+          "x-go-name": "ContributorLevel"
+        },
+        "page": {
+          "description": "Page number | 第几页",
+          "type": "integer",
+          "format": "uint64",
+          "minimum": 0,
+          "x-go-name": "Page"
+        },
+        "pageSize": {
+          "description": "Page size | 单页数据行数",
+          "type": "integer",
+          "format": "uint64",
+          "maximum": 100000,
+          "x-go-name": "PageSize"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "ListRewardResp": {
+      "description": "奖励记录列表响应体",
+      "type": "object",
+      "properties": {
+        "code": {
+          "description": "Error code | 错误代码",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Code"
+        },
+        "data": {
+          "description": "Data | 数据",
+          "type": "string",
+          "x-go-name": "Data",
+          "$ref": "#/definitions/ListRewardInfo"
+        },
+        "msg": {
+          "description": "Message | 提示信息",
+          "type": "string",
+          "x-go-name": "Msg"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "LoginInfo": {
+      "description": "登陆信息",
+      "type": "object",
+      "properties": {
+        "info": {
+          "$ref": "#/definitions/PlayerInfo"
+        },
+        "token": {
+          "description": "登陆token",
+          "type": "string",
+          "x-go-name": "Token"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "LoginReq": {
+      "description": "登陆接口请求体",
+      "type": "object",
+      "required": [
+        "email",
+        "password"
+      ],
+      "properties": {
+        "email": {
+          "description": "邮箱",
+          "type": "string",
+          "maxLength": 100,
+          "x-go-name": "Email"
+        },
+        "password": {
+          "description": "密码",
+          "type": "string",
+          "maxLength": 30,
+          "minLength": 6,
+          "x-go-name": "Password"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "LoginResp": {
+      "description": "登陆接口响应体",
+      "type": "object",
+      "properties": {
+        "code": {
+          "description": "Error code | 错误代码",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Code"
+        },
+        "data": {
+          "description": "Data | 数据",
+          "type": "string",
+          "x-go-name": "Data",
+          "$ref": "#/definitions/LoginInfo"
+        },
+        "msg": {
+          "description": "Message | 提示信息",
+          "type": "string",
+          "x-go-name": "Msg"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "OrderInfo": {
+      "description": "订单详情",
+      "type": "object",
+      "properties": {
+        "coinAmount": {
+          "description": "币数量",
+          "type": "number",
+          "format": "double",
+          "x-go-name": "Num"
+        },
+        "createAt": {
+          "description": "创建时间",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "CreateAt"
+        },
+        "handlingFee": {
+          "description": "手续费",
+          "type": "number",
+          "format": "double",
+          "x-go-name": "HandlingFee"
+        },
+        "id": {
+          "description": "Id",
+          "type": "integer",
+          "format": "uint64",
+          "x-go-name": "Id"
+        },
+        "network": {
+          "description": "网络",
+          "type": "string",
+          "x-go-name": "Network"
+        },
+        "status": {
+          "description": "状态: 1=审核中；2=待处理；3=处理中；4=交易完成；5=交易失败；",
+          "type": "integer",
+          "format": "uint32",
+          "x-go-name": "Status"
+        },
+        "statusDesc": {
+          "description": "状态描述",
+          "type": "string",
+          "x-go-name": "StatusDesc"
+        },
+        "toAddress": {
+          "description": "汇入地址",
+          "type": "string",
+          "x-go-name": "ToAddress"
+        },
+        "transactionId": {
+          "description": "交易ID",
+          "type": "string",
+          "x-go-name": "TransactionId"
+        },
+        "type": {
+          "description": "订单类型: deposit=充值订单；withdraw=提现订单",
+          "type": "string",
+          "x-go-name": "Type"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "PageInfo": {
+      "description": "The page request parameters | 列表请求参数",
+      "type": "object",
+      "required": [
+        "page",
+        "pageSize"
+      ],
+      "properties": {
+        "page": {
+          "description": "Page number | 第几页",
+          "type": "integer",
+          "format": "uint64",
+          "minimum": 0,
+          "x-go-name": "Page"
+        },
+        "pageSize": {
+          "description": "Page size | 单页数据行数",
+          "type": "integer",
+          "format": "uint64",
+          "maximum": 100000,
+          "x-go-name": "PageSize"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "PersonInfoResp": {
+      "description": "个人信息接口响应体",
+      "type": "object",
+      "properties": {
+        "code": {
+          "description": "Error code | 错误代码",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Code"
+        },
+        "data": {
+          "description": "Data | 数据",
+          "type": "string",
+          "x-go-name": "Data",
+          "$ref": "#/definitions/PlayerInfo"
+        },
+        "msg": {
+          "description": "Message | 提示信息",
+          "type": "string",
+          "x-go-name": "Msg"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "PlayerInfo": {
+      "description": "玩家信息",
+      "type": "object",
+      "properties": {
+        "amount": {
+          "description": "币剩余量",
+          "type": "number",
+          "format": "double",
+          "x-go-name": "Amount"
+        },
+        "email": {
+          "description": "邮箱",
+          "type": "string",
+          "x-go-name": "Email"
+        },
+        "id": {
+          "description": "玩家ID",
+          "type": "integer",
+          "format": "uint64",
+          "x-go-name": "Id"
+        },
+        "inviteCode": {
+          "description": "邀请码",
+          "type": "string",
+          "x-go-name": "InviteCode"
+        },
+        "lamb": {
+          "description": "羊剩余量",
+          "type": "number",
+          "format": "float",
+          "x-go-name": "Lamp"
+        },
+        "rank": {
+          "description": "代理等级",
+          "type": "integer",
+          "format": "uint32",
+          "x-go-name": "Rank"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "PlayerInvestInfo": {
+      "description": "当前玩家投注详情",
+      "type": "object",
+      "properties": {
+        "fold1": {
+          "$ref": "#/definitions/FoldDetail"
+        },
+        "fold2": {
+          "$ref": "#/definitions/FoldDetail"
+        },
+        "fold3": {
+          "$ref": "#/definitions/FoldDetail"
+        },
+        "fold4": {
+          "$ref": "#/definitions/FoldDetail"
+        },
+        "fold5": {
+          "$ref": "#/definitions/FoldDetail"
+        },
+        "fold6": {
+          "$ref": "#/definitions/FoldDetail"
+        },
+        "fold7": {
+          "$ref": "#/definitions/FoldDetail"
+        },
+        "fold8": {
+          "$ref": "#/definitions/FoldDetail"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "RegisterReq": {
+      "description": "注册接口请求体",
+      "type": "object",
+      "required": [
+        "email",
+        "password",
+        "captchaCode",
+        "invitedCode"
+      ],
+      "properties": {
+        "captchaCode": {
+          "description": "验证码",
+          "type": "string",
+          "maxLength": 6,
+          "minLength": 6,
+          "x-go-name": "CaptchaCode"
+        },
+        "email": {
+          "description": "邮箱",
+          "type": "string",
+          "maxLength": 100,
+          "x-go-name": "Email"
+        },
+        "invitedCode": {
+          "description": "邀请码",
+          "type": "string",
+          "maxLength": 7,
+          "minLength": 7,
+          "x-go-name": "InvitedCode"
+        },
+        "password": {
+          "description": "密码",
+          "type": "string",
+          "maxLength": 30,
+          "minLength": 6,
+          "x-go-name": "Password"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "ResultInfo": {
+      "description": "开奖结果详情",
+      "type": "object",
+      "properties": {
+        "foldNum": {
+          "description": "中奖羊圈号码",
+          "type": "integer",
+          "format": "uint32",
+          "x-go-name": "FoldNum"
+        },
+        "profitAndLoss": {
+          "description": "盈亏数量",
+          "type": "number",
+          "format": "float",
+          "x-go-name": "ProfitAndLoss"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "RewardInfo": {
+      "description": "奖励记录信息",
+      "type": "object",
+      "properties": {
+        "contributorEmail": {
+          "description": "贡献者邮箱",
+          "type": "string",
+          "x-go-name": "ContributorEmail"
+        },
+        "contributorId": {
+          "description": "贡献者ID",
+          "type": "integer",
+          "format": "uint64",
+          "x-go-name": "ContributorId"
+        },
+        "contributorLevel": {
+          "description": "贡献者等级",
+          "type": "integer",
+          "format": "uint32",
+          "x-go-name": "ContributorLevel"
+        },
+        "createAt": {
+          "description": "创建时间",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "CreateAt"
+        },
+        "id": {
+          "description": "奖励记录ID",
+          "type": "integer",
+          "format": "uint64",
+          "x-go-name": "Id"
+        },
+        "num": {
+          "description": "奖励数量",
+          "type": "number",
+          "format": "float",
+          "x-go-name": "Num"
+        },
+        "remark": {
+          "description": "备注",
+          "type": "string",
+          "x-go-name": "Remark"
+        },
+        "status": {
+          "description": "状态：1=完成",
+          "type": "integer",
+          "format": "uint32",
+          "x-go-name": "Status"
+        },
+        "statusDesc": {
+          "description": "奖励描述",
+          "type": "string",
+          "x-go-name": "StatusDesc"
+        },
+        "toId": {
+          "description": "奖励对象ID",
+          "type": "integer",
+          "format": "uint64",
+          "x-go-name": "ToId"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "RoundInfo": {
+      "description": "游戏回合数据",
+      "type": "object",
+      "properties": {
+        "endAt": {
+          "description": "回合结束时间（包括倒计时）",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "EndAt"
+        },
+        "foldInfo": {
+          "$ref": "#/definitions/FoldInfo"
+        },
+        "id": {
+          "description": "回合ID",
+          "type": "integer",
+          "format": "uint64",
+          "x-go-name": "Id"
+        },
+        "openAt": {
+          "description": "回合开奖时间",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "OpenAt"
+        },
+        "playerInvestInfo": {
+          "$ref": "#/definitions/PlayerInvestInfo"
+        },
+        "resultInfo": {
+          "$ref": "#/definitions/ResultInfo"
+        },
+        "startAt": {
+          "description": "回合开始时间（包括倒计时）",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "StartAt"
+        },
+        "status": {
+          "description": "状态: 1-投注中 2-开奖中 3-已结束",
+          "type": "integer",
+          "format": "uint32",
+          "x-go-name": "Status"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "RoundReq": {
+      "description": "盘口数据请求",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "请求的回合ID，默认返回当前回合数据",
+          "type": "integer",
+          "format": "uint64",
+          "x-go-name": "Id"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "RoundResp": {
+      "description": "盘口数据响应",
+      "type": "object",
+      "properties": {
+        "code": {
+          "description": "Error code | 错误代码",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Code"
+        },
+        "data": {
+          "description": "Data | 数据",
+          "type": "string",
+          "x-go-name": "Data",
+          "$ref": "#/definitions/RoundInfo"
+        },
+        "msg": {
+          "description": "Message | 提示信息",
+          "type": "string",
+          "x-go-name": "Msg"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "ShareResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "description": "Error code | 错误代码",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Code"
+        },
+        "data": {
+          "description": "QrCodeSource string `json:\"qr_code_source\"`\n分享链接",
+          "type": "string",
+          "x-go-name": "Data"
+        },
+        "msg": {
+          "description": "Message | 提示信息",
+          "type": "string",
+          "x-go-name": "Msg"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "TransactionPasswordReq": {
+      "description": "设置交易密码请求体",
+      "type": "object",
+      "required": [
+        "oldPassword",
+        "newPassword"
+      ],
+      "properties": {
+        "newPassword": {
+          "description": "新密码",
+          "type": "string",
+          "maxLength": 6,
+          "minLength": 6,
+          "x-go-name": "NewPassword"
+        },
+        "oldPassword": {
+          "description": "旧密码（首次设置则与新密码一致）",
+          "type": "string",
+          "maxLength": 6,
+          "minLength": 6,
+          "x-go-name": "OldPassword"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "UUIDPathReq": {
+      "description": "Basic UUID request in path | 基础UUID地址参数请求",
+      "type": "object",
+      "required": [
+        "Id"
+      ],
+      "properties": {
+        "Id": {
+          "description": "ID",
+          "type": "string"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "UUIDReq": {
+      "description": "Basic UUID request | 基础UUID参数请求",
+      "type": "object",
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "id": {
+          "description": "ID",
+          "type": "string",
+          "maxLength": 36,
+          "minLength": 36,
+          "x-go-name": "Id"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "UUIDsReq": {
+      "description": "Basic UUID array request | 基础UUID数组参数请求",
+      "type": "object",
+      "required": [
+        "ids"
+      ],
+      "properties": {
+        "ids": {
+          "description": "Ids",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "Ids"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "VerifyTransactionPasswordReq": {
+      "description": "校验交易密码请求体",
+      "type": "object",
+      "required": [
+        "oldPassword"
+      ],
+      "properties": {
+        "oldPassword": {
+          "description": "旧密码",
+          "type": "string",
+          "maxLength": 6,
+          "minLength": 6,
+          "x-go-name": "OldPassword"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "WalletInfo": {
+      "description": "钱包详情",
+      "type": "object",
+      "properties": {
+        "balance": {
+          "description": "账户余额",
+          "type": "number",
+          "format": "double",
+          "x-go-name": "Balance"
+        },
+        "depositAddress": {
+          "description": "充值账号地址",
+          "type": "string",
+          "x-go-name": "DepositAddress"
+        },
+        "isInit": {
+          "description": "交易密码是否初始化: 1=是；2=否",
+          "type": "integer",
+          "format": "uint32",
+          "x-go-name": "IsInit"
+        },
+        "lamb": {
+          "description": "羊剩余量",
+          "type": "number",
+          "format": "float",
+          "x-go-name": "Lamp"
+        },
+        "network": {
+          "description": "网络",
+          "type": "string",
+          "x-go-name": "Network"
+        },
+        "todayReward": {
+          "description": "今日奖励",
+          "type": "number",
+          "format": "double",
+          "x-go-name": "TodayReward"
+        },
+        "totalReward": {
+          "description": "累计总奖励",
+          "type": "number",
+          "format": "double",
+          "x-go-name": "TotalReward"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "WalletResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "description": "Error code | 错误代码",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Code"
+        },
+        "data": {
+          "description": "Data | 数据",
+          "type": "string",
+          "x-go-name": "Data",
+          "$ref": "#/definitions/WalletInfo"
+        },
+        "msg": {
+          "description": "Message | 提示信息",
+          "type": "string",
+          "x-go-name": "Msg"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "WithdrawReq": {
+      "description": "提币请求体",
+      "type": "object",
+      "required": [
+        "withdrawAddress",
+        "amount"
+      ],
+      "properties": {
+        "amount": {
+          "description": "提币数量",
+          "type": "number",
+          "format": "double",
+          "x-go-name": "Amount"
+        },
+        "withdrawAddress": {
+          "description": "提币汇入地址",
+          "type": "string",
+          "x-go-name": "WithdrawAddress"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "WithdrawResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "description": "Error code | 错误代码",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Code"
+        },
+        "data": {
+          "description": "提币ID",
+          "type": "integer",
+          "format": "uint64",
+          "x-go-name": "Data"
+        },
+        "msg": {
+          "description": "Message | 提示信息",
+          "type": "string",
+          "x-go-name": "Msg"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    }
+  },
+  "securityDefinitions": {
+    "Token": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  }
+}

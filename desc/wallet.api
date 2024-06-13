@@ -1,0 +1,105 @@
+syntax = "v1"
+
+// 校验交易密码请求体
+type VerifyTransactionPasswordReq {
+    // 旧密码
+    OldPassword string `json:"oldPassword" validate:"required,len=6"`
+}
+
+
+// 设置交易密码请求体
+type TransactionPasswordReq {
+    // 旧密码（首次设置则与新密码一致）
+    OldPassword string `json:"oldPassword" validate:"required,len=6"`
+    // 新密码
+    NewPassword string `json:"newPassword" validate:"required,len=6"`
+}
+
+// 提币请求体
+type WithdrawReq {
+    // 提币汇入地址
+    WithdrawAddress string `json:"withdrawAddress" validate:"required"`
+    // 提币数量
+    Amount float64 `json:"amount" validate:"required"`
+}
+
+type WithdrawResp {
+    BaseDataInfo
+    // 提币ID
+    Data uint64 `json:"data"`
+}
+
+// 钱包详情
+type WalletInfo {
+    // 交易密码是否初始化: 1=是；2=否
+    IsInit uint32 `json:"isInit"`
+    // 账户余额
+    Balance float64 `json:"balance"`
+    // 羊剩余量
+    Lamp float32 `json:"lamb"`
+    // 累计总奖励
+    TotalReward float64 `json:"totalReward"`
+    // 今日奖励
+    TodayReward float64 `json:"todayReward"`
+    // 网络
+    Network string `json:"network"`
+    // 充值账号地址
+    DepositAddress string `json:"depositAddress"`
+}
+
+type WalletResp {
+    BaseDataInfo
+    // 钱包详情
+    Data  WalletInfo `json:"data"`
+}
+
+// 预算提币请求体
+type EstimateWithdrawReq {
+    // 提币数量
+    Amount float64 `json:"amount" validate:"required"`
+}
+
+// 预算提币各项费用
+type EstimateWithdrawDataInfo {
+    // 提币数量
+    Amount float64 `json:"amount"`
+    // 提币手续费
+    HandingFee float64 `json:"handingFee"`
+    // 提币实际到账数量
+    ReceivedAmount float64 `json:"receivedAmount"`
+    // 总扣除费用
+    TotalAmount float64 `json:"totalAmount"`
+}
+
+// 预算提币各项费用响应体
+type EstimateWithdrawResp {
+    BaseDataInfo
+    Data EstimateWithdrawDataInfo `json:"data"`
+}
+
+@server(
+    jwt: Auth
+    group: wallet
+)
+
+service App {
+    // 校验交易密码是否正确接口（前置条件：登陆）
+    @handler verifyTransactionPassword
+    post /transaction_password/verify (VerifyTransactionPasswordReq) returns (BaseMsgResp)
+
+    // 设置交易密码接口（前置条件：登陆）
+    @handler transactionPassword
+    post /transaction_password/update (TransactionPasswordReq) returns (BaseMsgResp)
+
+    // 预算提币各项费用接口（前置条件：登陆）
+    @handler estimateWithdraw
+    post /withdraw/estimate (EstimateWithdrawReq) returns (EstimateWithdrawResp)
+
+    // 提币接口（前置条件：登陆）
+    @handler withdraw
+    post /withdraw (WithdrawReq) returns (WithdrawResp)
+
+    // 获取钱包详情接口（前置条件：登陆）
+    @handler wallet
+    post /wallet returns (WalletResp)
+}

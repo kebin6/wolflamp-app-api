@@ -1,0 +1,79 @@
+syntax = "v1"
+
+type (
+    // 订单详情
+    OrderInfo {
+        // Id
+        Id uint64 `json:"id"`
+        // 交易ID
+        TransactionId string `json:"transactionId"`
+        // 订单类型: deposit=充值订单；withdraw=提现订单
+        Type string `json:"type"`
+        // 币数量
+        Num float64 `json:"coinAmount"`
+        // 创建时间
+        CreateAt int64 `json:"createAt"`
+        // 状态: 1=审核中；2=待处理；3=处理中；4=交易完成；5=交易失败；
+        Status uint32 `json:"status"`
+        // 状态描述
+        StatusDesc string `json:"statusDesc"`
+        // 汇入地址
+        ToAddress string `json:"toAddress"`
+        // 网络
+        Network string `json:"network"`
+        // 手续费
+        HandlingFee float64 `json:"handlingFee"`
+    }
+
+    //  订单详情请求体
+    FindOrderReq {
+        // Id
+        Id  uint64 `json:"id" validate:"required"`
+    }
+
+    //  订单详情响应体
+    FindOrderResp {
+        BaseDataInfo
+        // 订单详情
+        Data  OrderInfo `json:"data"`
+    }
+
+    // 订单列表请求体
+    ListOrderReq {
+        PageInfo
+        // 订单类型: deposit=充值订单；withdraw=提现订单
+        Type string `json:"type" validate:"required,oneof=deposit withdraw"`
+    }
+
+    // 订单列表响应体
+    ListOrderResp {
+        BaseDataInfo
+
+        // 订单列表数据
+        Data  ListOrderInfo `json:"data"`
+    }
+
+    // 订单列表数据
+    ListOrderInfo {
+        BaseListInfo
+
+        // 订单列表
+        Data  []OrderInfo  `json:"data"`
+    }
+)
+
+@server(
+    jwt: Auth
+    group: order
+    prefix: order
+)
+
+service App {
+    // 订单列表接口（前置条件：登陆）
+    @handler list
+    post /list (ListOrderReq) returns (ListOrderResp)
+
+    // 订单详情接口（前置条件：登陆）
+    @handler find
+    post /find (FindOrderReq) returns (FindOrderResp)
+}

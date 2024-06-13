@@ -1,0 +1,79 @@
+syntax = "v1"
+
+type (
+    // 奖励记录信息
+    RewardInfo {
+        // 奖励记录ID
+        Id uint64 `json:"id"`
+        // 奖励对象ID
+        ToId uint64 `json:"toId"`
+        // 贡献者ID
+        ContributorId uint64 `json:"contributorId"`
+        // 贡献者邮箱
+        ContributorEmail string `json:"contributorEmail"`
+        // 贡献者等级
+        ContributorLevel uint32 `json:"contributorLevel"`
+        // 创建时间
+        CreateAt int64 `json:"createAt"`
+        // 状态：1=完成
+        Status uint32 `json:"status"`
+        // 奖励描述
+        StatusDesc string `json:"statusDesc"`
+        // 奖励数量
+        Num float32 `json:"num"`
+        // 备注
+        Remark string `json:"remark"`
+    }
+
+    // 奖励记录详情请求体
+    FindRewardReq {
+        // Id
+        Id  uint64 `json:"id"`
+    }
+
+    // 奖励记录详情响应体
+    FindRewardResp {
+        BaseDataInfo
+        // 兑换记录详情
+        Data  RewardInfo `json:"data"`
+    }
+
+    // 奖励记录列表请求体
+    ListRewardReq {
+        PageInfo
+        // 贡献者等级
+        ContributorLevel uint32 `json:"contributorLevel"`
+    }
+
+    // 奖励记录列表响应体
+    ListRewardResp {
+        BaseDataInfo
+
+        // 奖励记录列表响应体数据
+        Data  ListRewardInfo `json:"data"`
+    }
+
+    // 奖励记录列表响应体数据
+    ListRewardInfo {
+        BaseListInfo
+
+        // 兑换记录列表
+        Data  []RewardInfo  `json:"data"`
+    }
+)
+
+@server(
+    jwt: Auth
+    group: reward
+    prefix: reward
+)
+
+service App {
+    // Get Reward Log List | 奖励列表（前置条件：登陆）
+    @handler list
+    post /list (ListRewardReq) returns (ListRewardResp)
+
+    // Get Reward Log Info | 奖励详情（前置条件：登陆）
+    @handler find
+    post /find (FindRewardReq) returns (FindRewardResp)
+}

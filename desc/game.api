@@ -1,0 +1,113 @@
+syntax = "v1"
+
+// 投注请求体
+type InvestReq {
+    // 当前轮数
+    RoundId uint64 `json:"roundId" validate:"required"`
+    // 羊圈号码
+    FoldNo uint32 `json:"foldNo" validate:"required,oneof=1 2 3 4 5 6 7 8"`
+    // 投注数量
+    LambNum uint32 `json:"lambNum" validate:"required,oneof=1 5 10 20 50 100"`
+}
+
+// 羊圈详情
+type FoldInfo {
+    // 1号羊圈投注数
+    Fold1 FoldDetail `json:"fold1"`
+    // 2号羊圈投注数
+    Fold2 FoldDetail `json:"fold2"`
+    // 3号羊圈投注数
+    Fold3 FoldDetail `json:"fold3"`
+    // 4号羊圈投注数
+    Fold4 FoldDetail `json:"fold4"`
+    // 5号羊圈投注数
+    Fold5 FoldDetail `json:"fold5"`
+    // 6号羊圈投注数
+    Fold6 FoldDetail `json:"fold6"`
+    // 7号羊圈投注数
+    Fold7 FoldDetail `json:"fold7"`
+    // 8号羊圈投注数
+    Fold8 FoldDetail `json:"fold8"`
+}
+
+// 当前玩家投注详情
+type PlayerInvestInfo {
+    // 1号羊圈投注数
+    Fold1 FoldDetail `json:"fold1"`
+    // 2号羊圈投注数
+    Fold2 FoldDetail `json:"fold2"`
+    // 3号羊圈投注数
+    Fold3 FoldDetail `json:"fold3"`
+    // 4号羊圈投注数
+    Fold4 FoldDetail `json:"fold4"`
+    // 5号羊圈投注数
+    Fold5 FoldDetail `json:"fold5"`
+    // 6号羊圈投注数
+    Fold6 FoldDetail `json:"fold6"`
+    // 7号羊圈投注数
+    Fold7 FoldDetail `json:"fold7"`
+    // 8号羊圈投注数
+    Fold8 FoldDetail `json:"fold8"`
+}
+
+// 羊圈详情
+type FoldDetail {
+    // 羊圈号码
+    FoldNo uint32 `json:"foldNo"`
+    // 投注数量
+    LambNum uint32 `json:"lambNum"`
+}
+
+// 开奖结果详情
+type ResultInfo {
+    // 中奖羊圈号码
+    FoldNum uint32 `json:"foldNum"`
+    // 盈亏数量
+    ProfitAndLoss float32 `json:"profitAndLoss"`
+}
+
+// 游戏回合数据
+type RoundInfo {
+    // 回合ID
+    Id uint64 `json:"id"`
+    // 羊圈信息
+    FoldInfo FoldInfo `json:"foldInfo"`
+    // 当前玩家投注详情
+    PlayerInvestInfo PlayerInvestInfo `json:"playerInvestInfo"`
+    // 回合开始时间（包括倒计时）
+    StartAt int64 `json:"startAt"`
+    // 回合开奖时间
+    OpenAt int64 `json:"openAt"`
+    // 回合结束时间（包括倒计时）
+    EndAt int64 `json:"endAt"`
+    // 状态: 1-投注中 2-开奖中 3-已结束
+    Status uint32 `json:"status"`
+    // 开奖结果详情
+    ResultInfo ResultInfo `json:"resultInfo"`
+}
+
+// 盘口数据请求
+type RoundReq {
+    // 请求的回合ID，默认返回当前回合数据
+    Id *uint64 `json:"id,optional"`
+}
+
+// 盘口数据响应
+type RoundResp {
+    BaseDataInfo
+    Data RoundInfo `json:"data"`
+}
+
+@server(
+    jwt: Auth
+    group: game
+)
+
+service App {
+    // 获取游戏盘口数据接口
+    @handler GetRoundInfo
+    post /game  (RoundReq) returns (RoundResp)
+    // 投注接口
+    @handler Invest
+    post /game/invest  (InvestReq) returns (BaseDataInfo)
+}

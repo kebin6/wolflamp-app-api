@@ -1,0 +1,53 @@
+{
+	"system": {
+		"name": "Running Wolf"
+	},
+	"common": {
+		"success": "Successfully",
+		"failed": "Failed",
+		"updateSuccess": "Update successfully",
+		"updateFailed": "Update failed",
+		"createSuccess": "Create successfully",
+		"createFailed": "Create failed",
+		"deleteSuccess": "Delete successfully",
+		"deleteFailed": "Delete failed",
+		"targetNotExist": "Target does not exist",
+		"databaseError": "Database error",
+		"redisError": "Redis error",
+		"permissionDeny": "User does not have permission to access this interface",
+		"constraintError": "Operation failed: Data conflict",
+		"validationError": "Operation failed: Validation failed",
+		"notSingularError": "Operation failed: Data not unique",
+		"serviceUnavailable": "Service is unavailable, please check if the service is enabled",
+		"cacheError": "Cache error",
+		"wolfLampDisable": "Invalid Backend Service",
+		"emailExist": "Email Has Been Used",
+		"inviterNotFound": "Inviter Not Found",
+		"playerNotFound": "Account Not Found",
+		"wrongPassword": "Wrong Account or Password",
+		"invalidToken": "Invalid Token"
+	},
+	"init": {
+		"alreadyInit": "The database had been initialized.",
+		"initializeIsRunning": "The initialization is running..."
+	},
+	"captcha": {
+		"wrong": "wrong verify code",
+		"email": {
+			"subject": "Verification Code for【%s】",
+			"template": "Hello, your email verification code is %d. It will be valid for %d minutes, please fill it in promptly."
+		}
+	},
+	"wallet": {
+		"wrongOldTransactionPassword": "wrong old transaction password",
+		"invalidLambNum": "lamb count must be a multiple of 10",
+		"insufficientCoin": "insufficient coin",
+		"insufficientLamb": "insufficient lamb",
+		"minWithdrawLimit": "the withdrawal amount cannot be less than %f",
+		"insufficientBalance": "insufficient balance",
+		"withdrawExist": "withdrawal already exists"
+	},
+	"game": {
+		"roundNotFound": "game data cannot been found"
+	}
+}
