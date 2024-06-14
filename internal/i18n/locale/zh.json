@@ -49,6 +49,7 @@
 	},
 	"game": {
 		"roundNotFound": "游戏数据不存在",
-		"lambNotEnough": "羊数量不足"
+		"lambNotEnough": "羊数量不足",
+		"foldNoNotMatch": "一次只能投一个羊圈"
 	}
 }

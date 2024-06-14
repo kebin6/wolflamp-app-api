@@ -114,7 +114,23 @@ func (l *GetRoundInfoLogic) GetRoundInfo(req *types.RoundReq) (resp *types.Round
 	}
 
 	// 获取开奖结果
-	resultInfo := types.ResultInfo{}
+	resultInfo := types.ResultInfo{
+		FoldNum:       round.SelectedFold,
+		ProfitAndLoss: 0,
+	}
+	if round.SelectedFold != 0 {
+		playerInvests, err := l.svcCtx.WolfLampRpc.GetInvestInfoByPlayerId(l.ctx,
+			&wolflamp.GetInvestInfoByPlayerIdReq{RoundId: &round.Id, PlayerId: *id})
+		if err != nil {
+			return nil, err
+		}
+		profitAndLoss := float32(0)
+		for _, invest := range playerInvests.Data {
+			profitAndLoss += invest.ProfitAndLoss
+		}
+		resultInfo.ProfitAndLoss = profitAndLoss
+	}
+
 	return &types.RoundResp{
 		Data: types.RoundInfo{
 			Id:               round.Id,

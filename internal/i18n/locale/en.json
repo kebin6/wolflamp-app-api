@@ -49,6 +49,7 @@
 	},
 	"game": {
 		"roundNotFound": "game data cannot been found",
-		"lambNotEnough": "lamb count is not enough"
+		"lambNotEnough": "lamb count is not enough",
+		"foldNoNotMatch": "only one sheep pen can be bet on at a time"
 	}
 }
