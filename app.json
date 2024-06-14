@@ -2244,6 +2244,7 @@
       "description": "提币请求体",
       "type": "object",
       "required": [
+        "password",
         "withdrawAddress",
         "amount"
       ],
@@ -2253,6 +2254,13 @@
           "type": "number",
           "format": "double",
           "x-go-name": "Amount"
+        },
+        "password": {
+          "description": "交易密码",
+          "type": "string",
+          "maxLength": 6,
+          "minLength": 6,
+          "x-go-name": "Password"
         },
         "withdrawAddress": {
           "description": "提币汇入地址",

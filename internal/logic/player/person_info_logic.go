@@ -46,10 +46,6 @@ func (l *PersonInfoLogic) PersonInfo() (resp *types.PersonInfoResp, err error) {
 	}
 
 	return &types.PersonInfoResp{
-		BaseDataInfo: types.BaseDataInfo{
-			Code: 0,
-			Msg:  "success",
-		},
 		Data: types.PlayerInfo{
 			Id:         info.Id,
 			Email:      info.Email,

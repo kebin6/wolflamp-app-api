@@ -56,10 +56,6 @@ func (l *WalletLogic) Wallet() (resp *types.WalletResp, err error) {
 		isInit = 1
 	}
 	return &types.WalletResp{
-		BaseDataInfo: types.BaseDataInfo{
-			Code: 0,
-			Msg:  "success",
-		},
 		Data: types.WalletInfo{
 			IsInit:         isInit,
 			Balance:        info.Amount,

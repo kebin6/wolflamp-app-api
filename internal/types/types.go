@@ -366,6 +366,11 @@ type TransactionPasswordReq struct {
 // 提币请求体
 // swagger:model WithdrawReq
 type WithdrawReq struct {
+	// 交易密码
+	// required : true
+	// max length : 6
+	// min length : 6
+	Password string `json:"password" validate:"required,len=6"`
 	// 提币汇入地址
 	// required : true
 	WithdrawAddress string `json:"withdrawAddress" validate:"required"`

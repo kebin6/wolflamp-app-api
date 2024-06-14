@@ -48,6 +48,7 @@
 		"withdrawExist": "withdrawal already exists"
 	},
 	"game": {
-		"roundNotFound": "game data cannot been found"
+		"roundNotFound": "game data cannot been found",
+		"lambNotEnough": "lamb count is not enough"
 	}
 }

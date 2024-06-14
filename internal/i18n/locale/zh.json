@@ -48,6 +48,7 @@
 		"withdrawExist": "存在审核中的提币申请"
 	},
 	"game": {
-		"roundNotFound": "游戏数据不存在"
+		"roundNotFound": "游戏数据不存在",
+		"lambNotEnough": "羊数量不足"
 	}
 }

@@ -116,10 +116,6 @@ func (l *GetRoundInfoLogic) GetRoundInfo(req *types.RoundReq) (resp *types.Round
 	// 获取开奖结果
 	resultInfo := types.ResultInfo{}
 	return &types.RoundResp{
-		BaseDataInfo: types.BaseDataInfo{
-			Code: 0,
-			Msg:  i18n.Success,
-		},
 		Data: types.RoundInfo{
 			Id:               round.Id,
 			FoldInfo:         folds,

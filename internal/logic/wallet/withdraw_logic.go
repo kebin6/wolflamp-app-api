@@ -35,6 +35,12 @@ func (l *WithdrawLogic) Withdraw(req *types.WithdrawReq) (resp *types.WithdrawRe
 		return nil, errorx.NewCodeUnavailableError(i18n.ServiceUnavailable)
 	}
 
+	_, err = NewVerifyTransactionPasswordLogic(l.ctx, l.svcCtx).
+		VerifyTransactionPassword(&types.VerifyTransactionPasswordReq{OldPassword: req.Password})
+	if err != nil {
+		return nil, err
+	}
+
 	id, err := player.NewPersonInfoLogic(l.ctx, l.svcCtx).GetPlayerId()
 	if err != nil {
 		return nil, err

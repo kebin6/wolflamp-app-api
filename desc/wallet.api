@@ -17,6 +17,8 @@ type TransactionPasswordReq {
 
 // 提币请求体
 type WithdrawReq {
+    // 交易密码
+    Password string `json:"password" validate:"required,len=6"`
     // 提币汇入地址
     WithdrawAddress string `json:"withdrawAddress" validate:"required"`
     // 提币数量
