@@ -74,6 +74,12 @@ func (l *GetRoundInfoLogic) GetRoundInfo(req *types.RoundReq) (resp *types.Round
 		}
 	}
 
+	// 获取上一回合被选中的羊圈
+	previousRound, err := l.svcCtx.WolfLampRpc.PreviousRound(l.ctx, &wolflamp.Empty{})
+	if err != nil {
+		return nil, err
+	}
+
 	// 获取当前玩家投注情况
 	investResp, err := l.svcCtx.WolfLampRpc.GetInvestInfoByPlayerId(l.ctx,
 		&wolflamp.GetInvestInfoByPlayerIdReq{PlayerId: *id, RoundId: &round.Id})
@@ -135,6 +141,7 @@ func (l *GetRoundInfoLogic) GetRoundInfo(req *types.RoundReq) (resp *types.Round
 		Data: types.RoundInfo{
 			Id:               round.Id,
 			FoldInfo:         folds,
+			PreviousFoldNo:   previousRound.SelectedFoldNo,
 			PlayerInvestInfo: playerInvestInfo,
 			Status:           round.Status,
 			StartAt:          round.StartAt,

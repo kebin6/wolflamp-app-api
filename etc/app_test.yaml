@@ -51,7 +51,7 @@ CasbinConf:
 
 ProjectConf:
   EmailCaptchaExpiredTime: 600 # the expired time for email captcha
-  ShareLink: "http://http://8.138.124.190/share?invite=%s"
+  ShareLink: "http://47.250.155.55:8888/share?invite=%s"
   Network: "BNB Smart Chain Mainnet"
 
 McmsRpc:

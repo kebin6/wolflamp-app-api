@@ -734,6 +734,8 @@ type ResultInfo struct {
 type RoundInfo struct {
 	// 回合ID
 	Id uint64 `json:"id"`
+	// 上一轮被选中的羊圈
+	PreviousFoldNo uint32 `json:"previousFoldNo"`
 	// 羊圈信息
 	FoldInfo FoldInfo `json:"foldInfo"`
 	// 当前玩家投注详情

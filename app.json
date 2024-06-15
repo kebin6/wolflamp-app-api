@@ -2002,6 +2002,12 @@
         "playerInvestInfo": {
           "$ref": "#/definitions/PlayerInvestInfo"
         },
+        "previousFoldNo": {
+          "description": "上一轮被选中的羊圈",
+          "type": "integer",
+          "format": "uint32",
+          "x-go-name": "PreviousFoldNo"
+        },
         "resultInfo": {
           "$ref": "#/definitions/ResultInfo"
         },
