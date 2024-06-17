@@ -55,7 +55,7 @@ func (l *GetRoundInfoLogic) GetRoundInfo(req *types.RoundReq) (resp *types.Round
 	foldInvestPlayerNum := make(map[uint32]uint32)
 	// 以羊圈纬度统计各羊圈投注玩家数
 	for _, invest := range invests.Data {
-		if _, ok := foldInvestPlayerNum[invest.LambNum]; ok {
+		if _, ok := foldInvestPlayerNum[invest.FoldNo]; ok {
 			foldInvestPlayerNum[invest.FoldNo]++
 		} else {
 			foldInvestPlayerNum[invest.FoldNo] = 1
