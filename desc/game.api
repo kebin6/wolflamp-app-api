@@ -10,6 +10,12 @@ type InvestReq {
     LambNum uint32 `json:"lambNum" validate:"required,oneof=1 5 10 20 50 100"`
 }
 
+// 变更投注请求体
+type InvestChangeReq {
+    // 羊圈号码
+    FoldNo uint32 `json:"foldNo" validate:"required,oneof=1 2 3 4 5 6 7 8"`
+}
+
 // 羊圈详情
 type FoldInfo {
     // 1号羊圈投注数
@@ -136,6 +142,9 @@ service App {
     // 投注接口
     @handler Invest
     post /game/invest  (InvestReq) returns (BaseDataInfo)
+    // 变更投注羊圈
+    @handler Change
+    post /game/change  (InvestChangeReq) returns (BaseDataInfo)
     // 获取玩家投注记录
     @handler GetHistoryList
     post /game/history  (HistoryListReq) returns (HistoryListResp)

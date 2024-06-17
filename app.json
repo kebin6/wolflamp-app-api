@@ -186,6 +186,34 @@
         }
       }
     },
+    "/game/change": {
+      "post": {
+        "description": "变更投注羊圈",
+        "tags": [
+          "game"
+        ],
+        "summary": "变更投注羊圈",
+        "operationId": "Change",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/InvestChangeReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "BaseDataInfo",
+            "schema": {
+              "$ref": "#/definitions/BaseDataInfo"
+            }
+          }
+        }
+      }
+    },
     "/game/history": {
       "post": {
         "description": "获取游戏历史数据接口",
@@ -1452,6 +1480,22 @@
             "format": "uint32"
           },
           "x-go-name": "Ids"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "InvestChangeReq": {
+      "description": "变更投注请求体",
+      "type": "object",
+      "required": [
+        "foldNo"
+      ],
+      "properties": {
+        "foldNo": {
+          "description": "羊圈号码",
+          "type": "integer",
+          "format": "uint32",
+          "x-go-name": "FoldNo"
         }
       },
       "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"

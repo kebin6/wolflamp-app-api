@@ -169,6 +169,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodPost,
+				Path:    "/game/change",
+				Handler: game.ChangeHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
 				Path:    "/game/history",
 				Handler: game.GetHistoryListHandler(serverCtx),
 			},
