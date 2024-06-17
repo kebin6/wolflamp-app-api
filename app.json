@@ -186,6 +186,34 @@
         }
       }
     },
+    "/game/history": {
+      "post": {
+        "description": "获取游戏历史数据接口",
+        "tags": [
+          "game"
+        ],
+        "summary": "获取游戏历史数据接口",
+        "operationId": "GetHistoryList",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/HistoryListReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HistoryListResp",
+            "schema": {
+              "$ref": "#/definitions/HistoryListResp"
+            }
+          }
+        }
+      }
+    },
     "/game/invest": {
       "post": {
         "description": "投注接口",
@@ -1118,6 +1146,12 @@
           "type": "integer",
           "format": "uint32",
           "x-go-name": "LambNum"
+        },
+        "playerNum": {
+          "description": "投注玩家数",
+          "type": "integer",
+          "format": "uint32",
+          "x-go-name": "PlayerNum"
         }
       },
       "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
@@ -1149,6 +1183,75 @@
         },
         "fold8": {
           "$ref": "#/definitions/FoldDetail"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "HistoryListDataInfo": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "description": "Data | 数据",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/InvestRecordInfo"
+          },
+          "x-go-name": "Data"
+        },
+        "total": {
+          "description": "The total number of data | 数据总数",
+          "type": "integer",
+          "format": "uint64",
+          "x-go-name": "Total"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "HistoryListReq": {
+      "description": "游戏历史数据请求体",
+      "type": "object",
+      "required": [
+        "page",
+        "pageSize"
+      ],
+      "properties": {
+        "page": {
+          "description": "Page number | 第几页",
+          "type": "integer",
+          "format": "uint64",
+          "minimum": 0,
+          "x-go-name": "Page"
+        },
+        "pageSize": {
+          "description": "Page size | 单页数据行数",
+          "type": "integer",
+          "format": "uint64",
+          "maximum": 100000,
+          "x-go-name": "PageSize"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "HistoryListResp": {
+      "description": "游戏历史数据响应体",
+      "type": "object",
+      "properties": {
+        "code": {
+          "description": "Error code | 错误代码",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Code"
+        },
+        "data": {
+          "description": "Data | 数据",
+          "type": "string",
+          "x-go-name": "Data",
+          "$ref": "#/definitions/HistoryListDataInfo"
+        },
+        "msg": {
+          "description": "Message | 提示信息",
+          "type": "string",
+          "x-go-name": "Msg"
         }
       },
       "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
@@ -1349,6 +1452,23 @@
             "format": "uint32"
           },
           "x-go-name": "Ids"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "InvestRecordInfo": {
+      "description": "游戏历史结果",
+      "type": "object",
+      "properties": {
+        "profitAndLoss": {
+          "type": "number",
+          "format": "float",
+          "x-go-name": "ProfitAndLoss"
+        },
+        "recordTime": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "RecordTime"
         }
       },
       "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"

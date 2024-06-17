@@ -46,12 +46,33 @@ func (l *GetRoundInfoLogic) GetRoundInfo(req *types.RoundReq) (resp *types.Round
 		}
 		return nil, err
 	}
+
+	// 获取当前回合所有投注数据
+	invests, err := l.svcCtx.WolfLampRpc.GetInvestByRoundId(l.ctx, &wolflamp.GetInvestsByRoundIdReq{RoundId: round.Id})
+	if err != nil {
+		return nil, err
+	}
+	foldInvestPlayerNum := make(map[uint32]uint32)
+	// 以羊圈纬度统计各羊圈投注玩家数
+	for _, invest := range invests.Data {
+		if _, ok := foldInvestPlayerNum[invest.LambNum]; ok {
+			foldInvestPlayerNum[invest.FoldNo]++
+		} else {
+			foldInvestPlayerNum[invest.FoldNo] = 1
+		}
+	}
+
 	folds := types.FoldInfo{}
 	if round.Folds != nil {
 		for _, fold := range round.Folds {
+			playerNum := uint32(0)
+			if _, ok := foldInvestPlayerNum[fold.FoldNo]; ok {
+				playerNum = foldInvestPlayerNum[fold.FoldNo]
+			}
 			detail := types.FoldDetail{
-				FoldNo:  fold.FoldNo,
-				LambNum: fold.LambNum,
+				FoldNo:    fold.FoldNo,
+				LambNum:   fold.LambNum,
+				PlayerNum: playerNum,
 			}
 			switch fold.FoldNo {
 			case 1:

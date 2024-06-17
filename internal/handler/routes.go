@@ -167,6 +167,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/game/invest",
 				Handler: game.InvestHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/game/history",
+				Handler: game.GetHistoryListHandler(serverCtx),
+			},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 	)

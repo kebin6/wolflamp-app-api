@@ -56,6 +56,8 @@ type FoldDetail {
     FoldNo uint32 `json:"foldNo"`
     // 投注数量
     LambNum uint32 `json:"lambNum"`
+    // 投注玩家数
+    PlayerNum uint32 `json:"playerNum"`
 }
 
 // 开奖结果详情
@@ -100,6 +102,28 @@ type RoundResp {
     Data RoundInfo `json:"data"`
 }
 
+// 游戏历史结果
+type InvestRecordInfo {
+    ProfitAndLoss float32 `json:"profitAndLoss"`
+    RecordTime int64 `json:"recordTime"`
+}
+
+// 游戏历史数据请求体
+type HistoryListReq {
+    PageInfo
+}
+
+type HistoryListDataInfo {
+    BaseListInfo
+    Data []InvestRecordInfo `json:"data"`
+}
+
+// 游戏历史数据响应体
+type HistoryListResp {
+    BaseDataInfo
+    Data HistoryListDataInfo `json:"data"`
+}
+
 @server(
     jwt: Auth
     group: game
@@ -112,4 +136,7 @@ service App {
     // 投注接口
     @handler Invest
     post /game/invest  (InvestReq) returns (BaseDataInfo)
+    // 获取玩家投注记录
+    @handler GetHistoryList
+    post /game/history  (HistoryListReq) returns (HistoryListResp)
 }

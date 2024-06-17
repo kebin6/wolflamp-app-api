@@ -718,6 +718,8 @@ type FoldDetail struct {
 	FoldNo uint32 `json:"foldNo"`
 	// 投注数量
 	LambNum uint32 `json:"lambNum"`
+	// 投注玩家数
+	PlayerNum uint32 `json:"playerNum"`
 }
 
 // 开奖结果详情
@@ -764,4 +766,30 @@ type RoundReq struct {
 type RoundResp struct {
 	BaseDataInfo
 	Data RoundInfo `json:"data"`
+}
+
+// 游戏历史结果
+// swagger:model InvestRecordInfo
+type InvestRecordInfo struct {
+	ProfitAndLoss float32 `json:"profitAndLoss"`
+	RecordTime    int64   `json:"recordTime"`
+}
+
+// 游戏历史数据请求体
+// swagger:model HistoryListReq
+type HistoryListReq struct {
+	PageInfo
+}
+
+// swagger:model HistoryListDataInfo
+type HistoryListDataInfo struct {
+	BaseListInfo
+	Data []InvestRecordInfo `json:"data"`
+}
+
+// 游戏历史数据响应体
+// swagger:model HistoryListResp
+type HistoryListResp struct {
+	BaseDataInfo
+	Data HistoryListDataInfo `json:"data"`
 }
