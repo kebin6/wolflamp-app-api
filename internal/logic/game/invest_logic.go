@@ -39,7 +39,7 @@ func (l *InvestLogic) Invest(req *types.InvestReq) (resp *types.BaseDataInfo, er
 	}
 
 	_, err = l.svcCtx.WolfLampRpc.Invest(l.ctx,
-		&wolflamp.CreateInvestReq{RoundId: req.RoundId, PlayerId: *id, FoldNo: req.FoldNo, LambNum: req.LambNum})
+		&wolflamp.CreateInvestReq{RoundId: req.RoundId, PlayerId: *id, FoldNo: req.FoldNo, LambNum: req.LambNum, Mode: req.Mode})
 	if err != nil {
 		if status.Convert(err).Message() == "target does not exist" {
 			return nil, errorx.NewCodeInvalidArgumentError("game.roundNotFound")

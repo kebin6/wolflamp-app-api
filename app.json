@@ -408,16 +408,6 @@
         ],
         "summary": "获取个人信息接口（前置条件：登陆）",
         "operationId": "PersonInfo",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "$ref": "#/definitions/ModeReq"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "PersonInfoResp",
