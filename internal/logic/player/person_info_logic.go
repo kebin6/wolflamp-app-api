@@ -31,20 +31,17 @@ func (l *PersonInfoLogic) PersonInfo() (resp *types.PersonInfoResp, err error) {
 	if !l.svcCtx.Config.WolfLampRpc.Enabled {
 		return nil, errorx.NewApiInternalError("common.wolfLampDisable")
 	}
-
 	id, err := l.GetPlayerId()
 	if err != nil {
 		return nil, err
 	}
 	info, err := l.svcCtx.WolfLampRpc.FindPlayer(l.ctx, &wolflamp.FindPlayerReq{Id: id})
-
 	if err != nil {
 		if status.Convert(err).Message() != "target does not exist" {
 			return nil, errorx.NewApiInternalError("common.playerNotFound")
 		}
 		return nil, err
 	}
-
 	return &types.PersonInfoResp{
 		Data: types.PlayerInfo{
 			Id:       info.Id,
