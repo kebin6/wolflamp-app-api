@@ -42,7 +42,10 @@ func (l *ExchangeLogic) Exchange(req *types.ExchangeReq) (resp *types.ExchangeRe
 		LampAmount: req.LampAmount,
 	})
 	return &types.ExchangeResp{
-		Data: rpcResp.Id,
+		Data: types.ExchangeResult{
+			Id:          rpcResp.Id,
+			RedirectUrl: rpcResp.Link,
+		},
 	}, err
 
 }

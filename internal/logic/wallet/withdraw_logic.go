@@ -47,7 +47,7 @@ func (l *WithdrawLogic) Withdraw(req *types.WithdrawReq) (resp *types.WithdrawRe
 	}
 
 	// 获取玩家信息
-	info, err := l.svcCtx.WolfLampRpc.FindPlayer(l.ctx, &wolflamp.FindPlayerReq{Id: *id})
+	info, err := l.svcCtx.WolfLampRpc.FindPlayer(l.ctx, &wolflamp.FindPlayerReq{Id: id})
 	if err != nil {
 		if status.Convert(err).Message() != i18n.TargetNotFound {
 			return nil, errorx.NewApiInternalError("common.playerNotFound")

@@ -37,7 +37,7 @@ func (l *VerifyTransactionPasswordLogic) VerifyTransactionPassword(req *types.Ve
 	if err != nil {
 		return nil, err
 	}
-	info, err := l.svcCtx.WolfLampRpc.FindPlayer(l.ctx, &wolflamp.FindPlayerReq{Id: *id})
+	info, err := l.svcCtx.WolfLampRpc.FindPlayer(l.ctx, &wolflamp.FindPlayerReq{Id: id})
 
 	if err != nil {
 		if status.Convert(err).Message() == "target does not exist" {

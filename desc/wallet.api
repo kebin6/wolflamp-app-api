@@ -35,18 +35,13 @@ type WithdrawResp {
 type WalletInfo {
     // 交易密码是否初始化: 1=是；2=否
     IsInit uint32 `json:"isInit"`
-    // 账户余额
-    Balance float64 `json:"balance"`
+    // coin账户余额
+    CoinBalance float64 `json:"coinBalance"`
+    // token账户余额
+    TokenBalance float64 `json:"tokenBalance"`
     // 羊剩余量
-    Lamp float32 `json:"lamb"`
-    // 累计总奖励
-    TotalReward float64 `json:"totalReward"`
-    // 今日奖励
-    TodayReward float64 `json:"todayReward"`
-    // 网络
-    Network string `json:"network"`
-    // 充值账号地址
-    DepositAddress string `json:"depositAddress"`
+    CoinLamb float32 `json:"coinLamb"`
+    TokenLamb float32 `json:"tokenLamb"`
 }
 
 type WalletResp {

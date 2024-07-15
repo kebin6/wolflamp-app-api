@@ -23,4 +23,5 @@ type ProjectConf struct {
 	EmailCaptchaExpiredTime int
 	ShareLink               string
 	Network                 string
+	RedirectGameUrl         string
 }

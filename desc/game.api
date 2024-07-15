@@ -8,12 +8,15 @@ type InvestReq {
     FoldNo uint32 `json:"foldNo" validate:"required,oneof=1 2 3 4 5 6 7 8"`
     // 投注数量
     LambNum uint32 `json:"lambNum" validate:"required,oneof=1 5 10 20 50 100"`
+
+    ModeReq
 }
 
 // 变更投注请求体
 type InvestChangeReq {
     // 羊圈号码
     FoldNo uint32 `json:"foldNo" validate:"required,oneof=1 2 3 4 5 6 7 8"`
+    ModeReq
 }
 
 // 羊圈详情
@@ -66,10 +69,17 @@ type FoldDetail {
     PlayerNum uint32 `json:"playerNum"`
 }
 
+type ResultFoldInfo {
+    // 被选中的羊圈号码
+    FoldNo uint32 `json:"foldNo"`
+}
+
 // 开奖结果详情
 type ResultInfo {
-    // 中奖羊圈号码
-    FoldNum uint32 `json:"foldNum"`
+    // 开奖类型: 0-未开奖；1-单狼猎杀；2-金羊奖励；3-银羊奖励；4-多狼猎杀
+    Type uint32 `json:"type"`
+    // 中奖羊圈情况
+    Folds []ResultFoldInfo `json:"folds"`
     // 盈亏数量
     ProfitAndLoss float32 `json:"profitAndLoss"`
 }
@@ -100,6 +110,7 @@ type RoundInfo {
 type RoundReq {
     // 请求的回合ID，默认返回当前回合数据
     Id *uint64 `json:"id,optional"`
+    ModeReq
 }
 
 // 盘口数据响应
@@ -117,6 +128,7 @@ type InvestRecordInfo {
 // 游戏历史数据请求体
 type HistoryListReq {
     PageInfo
+    ModeReq
 }
 
 type HistoryListDataInfo {

@@ -61,6 +61,7 @@ func (l *FindLogic) Po2Vo(po *wolflamp.ExchangeInfo) (vo types.ExchangeInfo) {
 		TypeDesc:      exchangeenum.NewExchangeType(po.Type).Desc(),
 		CoinAmount:    po.CoinNum,
 		LampAmount:    po.LampNum,
+		Mode:          po.Mode,
 	}
 
 }

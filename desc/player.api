@@ -9,16 +9,12 @@ type CaptchaReq {
 type PlayerInfo {
     // 玩家ID
     Id uint64 `json:"id"`
-    // 邮箱
-    Email string `json:"email"`
-    // 邀请码
-    InviteCode string `json:"inviteCode"`
     // 币剩余量
-    Amount float64 `json:"amount"`
+    //Amount float64 `json:"amount"`
     // 羊剩余量
-    Lamp float32 `json:"lamb"`
-    // 代理等级
-    Rank uint32 `json:"rank"`
+    //Lamb float32 `json:"lamb"`
+    // 登陆URL
+    LoginUrl string `json:"loginUrl"`
 }
 
 // 登陆信息
@@ -56,6 +52,10 @@ type LoginResp {
     Data LoginInfo `json:"data"`
 }
 
+type PersonInfoReq {
+    Mode string `json:"mode" validate:"required,oneof=coin token"`
+}
+
 // 个人信息接口响应体
 type PersonInfoResp {
     BaseDataInfo
@@ -83,11 +83,44 @@ type ShareResp {
     Data string `json:"data"`
 }
 
+type RedirectReq {
+    Sign string `header:"X-PD-SIGN"`
+    Token string `form:"token"`
+    Time int64 `form:"time"`
+    UserId uint64 `form:"user_id"`
+    ReturnUrl string `form:"return_url"`
+}
+
+type RedirectInfo {
+    GameUrl string `json:"game_url"`
+}
+
+type RedirectResp {
+    BaseDataInfo
+    Data RedirectInfo `json:"data"`
+}
+
+type NotifyReq {
+    Sign string `header:"X-PD-SIGN"`
+    OrderId string `form:"orderid"`
+    Time int64 `form:"time"`
+    PaymentStatus int64 `form:"payment_status"`
+    Amount float64 `form:"amount"`
+}
+
 @server(
     group: player
 )
 
 service App {
+    // 提供给GCICS平台的调转游戏接口
+    @handler redirect
+    post /redirect (RedirectReq) returns (RedirectResp)
+
+    // 提供给GCICS平台的支付回调接口
+    @handler notify
+    post /notify (NotifyReq) returns (BaseMsgResp)
+
     // 获取验证码接口
     @handler captcha
     post /captcha (CaptchaReq) returns (BaseMsgResp)
@@ -109,6 +142,7 @@ service App {
 @server(
     jwt: Auth
     group: player
+    //middleware: Authority
 )
 
 service App {

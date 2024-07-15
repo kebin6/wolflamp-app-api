@@ -21,6 +21,16 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				Method:  http.MethodPost,
+				Path:    "/redirect",
+				Handler: player.RedirectHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/notify",
+				Handler: player.NotifyHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
 				Path:    "/captcha",
 				Handler: player.CaptchaHandler(serverCtx),
 			},

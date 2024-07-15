@@ -63,19 +63,17 @@ func (l *RegisterLogic) Register(req *types.RegisterReq) (resp *types.LoginResp,
 	//}
 
 	_, err = l.svcCtx.WolfLampRpc.CreatePlayer(l.ctx, &wolflamp.CreatePlayerReq{
-		Name:                 req.Email,
-		Email:                req.Email,
-		Password:             encrypt.BcryptEncrypt(req.Password),
-		InvitedCode:          req.InvitedCode,
-		Status:               1,
-		Lamp:                 0,
-		Rank:                 0,
-		Amount:               0,
-		InvitedNum:           0,
-		TotalIncome:          0,
-		ProfitAndLoss:        0,
-		Recent_100WinPercent: 0,
-		SystemCommission:     0,
+		Name:             req.Email,
+		Email:            req.Email,
+		Password:         encrypt.BcryptEncrypt(req.Password),
+		InvitedCode:      req.InvitedCode,
+		Status:           1,
+		Rank:             0,
+		Amount:           0,
+		InvitedNum:       0,
+		TotalIncome:      0,
+		ProfitAndLoss:    0,
+		SystemCommission: 0,
 	})
 	if err != nil {
 		return nil, err

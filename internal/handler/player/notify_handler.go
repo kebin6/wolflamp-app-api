@@ -10,36 +10,35 @@ import (
 	"github.com/kebin6/wolflamp-app-api/internal/types"
 )
 
-// swagger:route post /person player PersonInfo
+// swagger:route post /notify player Notify
 //
-// 获取个人信息接口（前置条件：登陆）
+// 提供给GCICS平台的支付回调接口
 //
-// 获取个人信息接口（前置条件：登陆）
+// 提供给GCICS平台的支付回调接口
 //
 // Parameters:
 //  + name: body
 //    require: true
 //    in: body
-//    type: ModeReq
+//    type: NotifyReq
 //
 // Responses:
-//  200: PersonInfoResp
+//  200: BaseMsgResp
 
-func PersonInfoHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func NotifyHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req types.ModeReq
+		var req types.NotifyReq
 		if err := httpx.Parse(r, &req, true); err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 			return
 		}
 
-		l := player.NewPersonInfoLogic(r.Context(), svcCtx)
-		resp, err := l.PersonInfo()
+		l := player.NewNotifyLogic(r.Context(), svcCtx)
+		_, err := l.Notify(&req)
 		if err != nil {
-			err = svcCtx.Trans.TransError(r.Context(), err)
-			httpx.ErrorCtx(r.Context(), w, err)
-		} else {
-			httpx.OkJsonCtx(r.Context(), w, resp)
+			_, _ = w.Write([]byte(err.Error()))
+			return
 		}
+		_, _ = w.Write([]byte("SUCCESS"))
 	}
 }

@@ -316,6 +316,34 @@
         }
       }
     },
+    "/notify": {
+      "post": {
+        "description": "提供给GCICS平台的支付回调接口",
+        "tags": [
+          "player"
+        ],
+        "summary": "提供给GCICS平台的支付回调接口",
+        "operationId": "Notify",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/NotifyReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "BaseMsgResp",
+            "schema": {
+              "$ref": "#/definitions/BaseMsgResp"
+            }
+          }
+        }
+      }
+    },
     "/order/find": {
       "post": {
         "description": "订单详情接口（前置条件：登陆）",
@@ -380,11 +408,49 @@
         ],
         "summary": "获取个人信息接口（前置条件：登陆）",
         "operationId": "PersonInfo",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/ModeReq"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "PersonInfoResp",
             "schema": {
               "$ref": "#/definitions/PersonInfoResp"
+            }
+          }
+        }
+      }
+    },
+    "/redirect": {
+      "post": {
+        "description": "提供给GCICS平台的调转游戏接口",
+        "tags": [
+          "player"
+        ],
+        "summary": "提供给GCICS平台的调转游戏接口",
+        "operationId": "Redirect",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/RedirectReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "RedirectResp",
+            "schema": {
+              "$ref": "#/definitions/RedirectResp"
             }
           }
         }
@@ -959,8 +1025,13 @@
           "format": "uint32",
           "x-go-name": "LampAmount"
         },
+        "mode": {
+          "description": "模式：1=coin；2=token",
+          "type": "string",
+          "x-go-name": "Mode"
+        },
         "status": {
-          "description": "状态：1=完成",
+          "description": "状态：0=创建；1=完成；2=失败",
           "type": "integer",
           "format": "uint32",
           "x-go-name": "Status"
@@ -993,6 +1064,7 @@
       "description": "兑换请求体",
       "type": "object",
       "required": [
+        "mode",
         "type",
         "coinAmount",
         "lambAmount"
@@ -1011,6 +1083,10 @@
           "format": "uint32",
           "minLength": 10,
           "x-go-name": "LampAmount"
+        },
+        "mode": {
+          "type": "string",
+          "x-go-name": "Mode"
         },
         "type": {
           "description": "type | 兑换类型：1=币兑羊；2=羊兑币",
@@ -1032,15 +1108,31 @@
           "x-go-name": "Code"
         },
         "data": {
-          "description": "Data ｜ 兑换记录ID",
-          "type": "integer",
-          "format": "uint64",
-          "x-go-name": "Data"
+          "description": "Data | 数据",
+          "type": "string",
+          "x-go-name": "Data",
+          "$ref": "#/definitions/ExchangeResult"
         },
         "msg": {
           "description": "Message | 提示信息",
           "type": "string",
           "x-go-name": "Msg"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "ExchangeResult": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "兑换记录ID",
+          "type": "integer",
+          "format": "uint64",
+          "x-go-name": "Id"
+        },
+        "redirectUrl": {
+          "type": "string",
+          "x-go-name": "RedirectUrl"
         }
       },
       "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
@@ -1240,9 +1332,14 @@
       "type": "object",
       "required": [
         "page",
-        "pageSize"
+        "pageSize",
+        "mode"
       ],
       "properties": {
+        "mode": {
+          "type": "string",
+          "x-go-name": "Mode"
+        },
         "page": {
           "description": "Page number | 第几页",
           "type": "integer",
@@ -1488,6 +1585,7 @@
       "description": "变更投注请求体",
       "type": "object",
       "required": [
+        "mode",
         "foldNo"
       ],
       "properties": {
@@ -1496,6 +1594,10 @@
           "type": "integer",
           "format": "uint32",
           "x-go-name": "FoldNo"
+        },
+        "mode": {
+          "type": "string",
+          "x-go-name": "Mode"
         }
       },
       "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
@@ -1521,6 +1623,7 @@
       "description": "投注请求体",
       "type": "object",
       "required": [
+        "mode",
         "roundId",
         "foldNo",
         "lambNum"
@@ -1537,6 +1640,10 @@
           "type": "integer",
           "format": "uint32",
           "x-go-name": "LambNum"
+        },
+        "mode": {
+          "type": "string",
+          "x-go-name": "Mode"
         },
         "roundId": {
           "description": "当前轮数",
@@ -1573,9 +1680,14 @@
       "type": "object",
       "required": [
         "page",
-        "pageSize"
+        "pageSize",
+        "mode"
       ],
       "properties": {
+        "mode": {
+          "type": "string",
+          "x-go-name": "Mode"
+        },
         "page": {
           "description": "Page number | 第几页",
           "type": "integer",
@@ -1832,6 +1944,43 @@
       },
       "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
     },
+    "ModeReq": {
+      "type": "object",
+      "required": [
+        "mode"
+      ],
+      "properties": {
+        "mode": {
+          "type": "string",
+          "x-go-name": "Mode"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "NotifyReq": {
+      "type": "object",
+      "properties": {
+        "Amount": {
+          "type": "number",
+          "format": "double"
+        },
+        "OrderId": {
+          "type": "string"
+        },
+        "PaymentStatus": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "Sign": {
+          "type": "string"
+        },
+        "Time": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
     "OrderInfo": {
       "description": "订单详情",
       "type": "object",
@@ -1919,6 +2068,19 @@
       },
       "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
     },
+    "PersonInfoReq": {
+      "type": "object",
+      "required": [
+        "mode"
+      ],
+      "properties": {
+        "mode": {
+          "type": "string",
+          "x-go-name": "Mode"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
     "PersonInfoResp": {
       "description": "个人信息接口响应体",
       "type": "object",
@@ -1947,39 +2109,16 @@
       "description": "玩家信息",
       "type": "object",
       "properties": {
-        "amount": {
-          "description": "币剩余量",
-          "type": "number",
-          "format": "double",
-          "x-go-name": "Amount"
-        },
-        "email": {
-          "description": "邮箱",
-          "type": "string",
-          "x-go-name": "Email"
-        },
         "id": {
           "description": "玩家ID",
           "type": "integer",
           "format": "uint64",
           "x-go-name": "Id"
         },
-        "inviteCode": {
-          "description": "邀请码",
+        "loginUrl": {
+          "description": "币剩余量\nAmount float64 `json:\"amount\"`\n羊剩余量\nLamb float32 `json:\"lamb\"`\n登陆URL",
           "type": "string",
-          "x-go-name": "InviteCode"
-        },
-        "lamb": {
-          "description": "羊剩余量",
-          "type": "number",
-          "format": "float",
-          "x-go-name": "Lamp"
-        },
-        "rank": {
-          "description": "代理等级",
-          "type": "integer",
-          "format": "uint32",
-          "x-go-name": "Rank"
+          "x-go-name": "LoginUrl"
         }
       },
       "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
@@ -2011,6 +2150,62 @@
         },
         "fold8": {
           "$ref": "#/definitions/FoldDetail"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "RedirectInfo": {
+      "type": "object",
+      "properties": {
+        "game_url": {
+          "type": "string",
+          "x-go-name": "GameUrl"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "RedirectReq": {
+      "type": "object",
+      "properties": {
+        "ReturnUrl": {
+          "type": "string"
+        },
+        "Sign": {
+          "type": "string"
+        },
+        "Time": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "Token": {
+          "type": "string"
+        },
+        "UserId": {
+          "type": "integer",
+          "format": "uint64"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
+    "RedirectResp": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "description": "Error code | 错误代码",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Code"
+        },
+        "data": {
+          "description": "Data | 数据",
+          "type": "string",
+          "x-go-name": "Data",
+          "$ref": "#/definitions/RedirectInfo"
+        },
+        "msg": {
+          "description": "Message | 提示信息",
+          "type": "string",
+          "x-go-name": "Msg"
         }
       },
       "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
@@ -2055,21 +2250,41 @@
       },
       "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
     },
+    "ResultFoldInfo": {
+      "type": "object",
+      "properties": {
+        "foldNo": {
+          "description": "被选中的羊圈号码",
+          "type": "integer",
+          "format": "uint32",
+          "x-go-name": "FoldNo"
+        }
+      },
+      "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
+    },
     "ResultInfo": {
       "description": "开奖结果详情",
       "type": "object",
       "properties": {
-        "foldNum": {
-          "description": "中奖羊圈号码",
-          "type": "integer",
-          "format": "uint32",
-          "x-go-name": "FoldNum"
+        "folds": {
+          "description": "中奖羊圈情况",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ResultFoldInfo"
+          },
+          "x-go-name": "Folds"
         },
         "profitAndLoss": {
           "description": "盈亏数量",
           "type": "number",
           "format": "float",
           "x-go-name": "ProfitAndLoss"
+        },
+        "type": {
+          "description": "开奖类型: 0-未开奖；1-单狼猎杀；2-金羊奖励；3-银羊奖励；4-多狼猎杀",
+          "type": "integer",
+          "format": "uint32",
+          "x-go-name": "Type"
         }
       },
       "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
@@ -2193,12 +2408,19 @@
     "RoundReq": {
       "description": "盘口数据请求",
       "type": "object",
+      "required": [
+        "mode"
+      ],
       "properties": {
         "id": {
           "description": "请求的回合ID，默认返回当前回合数据",
           "type": "integer",
           "format": "uint64",
           "x-go-name": "Id"
+        },
+        "mode": {
+          "type": "string",
+          "x-go-name": "Mode"
         }
       },
       "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
@@ -2344,16 +2566,17 @@
       "description": "钱包详情",
       "type": "object",
       "properties": {
-        "balance": {
-          "description": "账户余额",
+        "coinBalance": {
+          "description": "coin账户余额",
           "type": "number",
           "format": "double",
-          "x-go-name": "Balance"
+          "x-go-name": "CoinBalance"
         },
-        "depositAddress": {
-          "description": "充值账号地址",
-          "type": "string",
-          "x-go-name": "DepositAddress"
+        "coinLamb": {
+          "description": "羊剩余量",
+          "type": "number",
+          "format": "float",
+          "x-go-name": "CoinLamb"
         },
         "isInit": {
           "description": "交易密码是否初始化: 1=是；2=否",
@@ -2361,28 +2584,16 @@
           "format": "uint32",
           "x-go-name": "IsInit"
         },
-        "lamb": {
-          "description": "羊剩余量",
+        "tokenBalance": {
+          "description": "token账户余额",
+          "type": "number",
+          "format": "double",
+          "x-go-name": "TokenBalance"
+        },
+        "tokenLamb": {
           "type": "number",
           "format": "float",
-          "x-go-name": "Lamp"
-        },
-        "network": {
-          "description": "网络",
-          "type": "string",
-          "x-go-name": "Network"
-        },
-        "todayReward": {
-          "description": "今日奖励",
-          "type": "number",
-          "format": "double",
-          "x-go-name": "TodayReward"
-        },
-        "totalReward": {
-          "description": "累计总奖励",
-          "type": "number",
-          "format": "double",
-          "x-go-name": "TotalReward"
+          "x-go-name": "TokenLamb"
         }
       },
       "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"

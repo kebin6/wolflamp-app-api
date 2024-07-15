@@ -9,13 +9,21 @@ type (
         CoinAmount uint32 `json:"coinAmount" validate:"required,min=1"`
         // lamb amount | 羊数量
         LampAmount uint32 `json:"lambAmount" validate:"required,min=10"`
+
+        ModeReq
+    }
+
+    ExchangeResult {
+        // 兑换记录ID
+        Id uint64 `json:"id"`
+        RedirectUrl *string `json:"redirectUrl,omitempty"`
     }
 
     // 兑换响应体
     ExchangeResp {
         BaseDataInfo
         // Data ｜ 兑换记录ID
-        Data  uint64 `json:"data"`
+        Data  ExchangeResult `json:"data"`
     }
 
     // 兑换记录详情
@@ -34,10 +42,12 @@ type (
         LampAmount uint32 `json:"lambAmount"`
         // 创建时间
         CreateAt int64 `json:"createAt"`
-        // 状态：1=完成
+        // 状态：0=创建；1=完成；2=失败
         Status uint32 `json:"status"`
         // 状态描述
         StatusDesc string `json:"statusDesc"`
+        // 模式：1=coin；2=token
+        Mode string `json:"mode"`
     }
 
     // 兑换记录详情请求体
@@ -56,6 +66,7 @@ type (
     // 兑换记录列表请求体
     ListExchangeReq {
         PageInfo
+        ModeReq
     }
 
     // 兑换记录列表响应体

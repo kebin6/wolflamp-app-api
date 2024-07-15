@@ -220,6 +220,12 @@ type BaseUUIDInfo struct {
 	UpdatedAt *int64 `json:"updatedAt,optional"`
 }
 
+// swagger:model ModeReq
+type ModeReq struct {
+	// required : true
+	Mode string `json:"mode" validate:"required,oneof=coin token"`
+}
+
 // 验证码请求体
 // swagger:model CaptchaReq
 type CaptchaReq struct {
@@ -233,16 +239,12 @@ type CaptchaReq struct {
 type PlayerInfo struct {
 	// 玩家ID
 	Id uint64 `json:"id"`
-	// 邮箱
-	Email string `json:"email"`
-	// 邀请码
-	InviteCode string `json:"inviteCode"`
 	// 币剩余量
-	Amount float64 `json:"amount"`
+	//Amount float64 `json:"amount"`
 	// 羊剩余量
-	Lamp float32 `json:"lamb"`
-	// 代理等级
-	Rank uint32 `json:"rank"`
+	//Lamb float32 `json:"lamb"`
+	// 登陆URL
+	LoginUrl string `json:"loginUrl"`
 }
 
 // 登陆信息
@@ -300,6 +302,12 @@ type LoginResp struct {
 	Data LoginInfo `json:"data"`
 }
 
+// swagger:model PersonInfoReq
+type PersonInfoReq struct {
+	// required : true
+	Mode string `json:"mode" validate:"required,oneof=coin token"`
+}
+
 // 个人信息接口响应体
 // swagger:model PersonInfoResp
 type PersonInfoResp struct {
@@ -336,6 +344,35 @@ type ShareResp struct {
 	//QrCodeSource string `json:"qr_code_source"`
 	// 分享链接
 	Data string `json:"data"`
+}
+
+// swagger:model RedirectReq
+type RedirectReq struct {
+	Sign      string `header:"X-PD-SIGN"`
+	Token     string `form:"token"`
+	Time      int64  `form:"time"`
+	UserId    uint64 `form:"user_id"`
+	ReturnUrl string `form:"return_url"`
+}
+
+// swagger:model RedirectInfo
+type RedirectInfo struct {
+	GameUrl string `json:"game_url"`
+}
+
+// swagger:model RedirectResp
+type RedirectResp struct {
+	BaseDataInfo
+	Data RedirectInfo `json:"data"`
+}
+
+// swagger:model NotifyReq
+type NotifyReq struct {
+	Sign          string  `header:"X-PD-SIGN"`
+	OrderId       string  `form:"orderid"`
+	Time          int64   `form:"time"`
+	PaymentStatus int64   `form:"payment_status"`
+	Amount        float64 `form:"amount"`
 }
 
 // 校验交易密码请求体
@@ -391,18 +428,13 @@ type WithdrawResp struct {
 type WalletInfo struct {
 	// 交易密码是否初始化: 1=是；2=否
 	IsInit uint32 `json:"isInit"`
-	// 账户余额
-	Balance float64 `json:"balance"`
+	// coin账户余额
+	CoinBalance float64 `json:"coinBalance"`
+	// token账户余额
+	TokenBalance float64 `json:"tokenBalance"`
 	// 羊剩余量
-	Lamp float32 `json:"lamb"`
-	// 累计总奖励
-	TotalReward float64 `json:"totalReward"`
-	// 今日奖励
-	TodayReward float64 `json:"todayReward"`
-	// 网络
-	Network string `json:"network"`
-	// 充值账号地址
-	DepositAddress string `json:"depositAddress"`
+	CoinLamb  float32 `json:"coinLamb"`
+	TokenLamb float32 `json:"tokenLamb"`
 }
 
 // swagger:model WalletResp
@@ -522,6 +554,13 @@ type ExchangeReq struct {
 	// required : true
 	// min length : 10
 	LampAmount uint32 `json:"lambAmount" validate:"required,min=10"`
+	ModeReq
+}
+
+type ExchangeResult struct {
+	// 兑换记录ID
+	Id          uint64  `json:"id"`
+	RedirectUrl *string `json:"redirectUrl,omitempty"`
 }
 
 // 兑换响应体
@@ -529,7 +568,7 @@ type ExchangeReq struct {
 type ExchangeResp struct {
 	BaseDataInfo
 	// Data ｜ 兑换记录ID
-	Data uint64 `json:"data"`
+	Data ExchangeResult `json:"data"`
 }
 
 // 兑换记录详情
@@ -549,10 +588,12 @@ type ExchangeInfo struct {
 	LampAmount uint32 `json:"lambAmount"`
 	// 创建时间
 	CreateAt int64 `json:"createAt"`
-	// 状态：1=完成
+	// 状态：0=创建；1=完成；2=失败
 	Status uint32 `json:"status"`
 	// 状态描述
 	StatusDesc string `json:"statusDesc"`
+	// 模式：1=coin；2=token
+	Mode string `json:"mode"`
 }
 
 // 兑换记录详情请求体
@@ -574,6 +615,7 @@ type FindExchangeResp struct {
 // swagger:model ListExchangeReq
 type ListExchangeReq struct {
 	PageInfo
+	ModeReq
 }
 
 // 兑换记录列表响应体
@@ -668,6 +710,7 @@ type InvestReq struct {
 	// 投注数量
 	// required : true
 	LambNum uint32 `json:"lambNum" validate:"required,oneof=1 5 10 20 50 100"`
+	ModeReq
 }
 
 // 变更投注请求体
@@ -676,6 +719,7 @@ type InvestChangeReq struct {
 	// 羊圈号码
 	// required : true
 	FoldNo uint32 `json:"foldNo" validate:"required,oneof=1 2 3 4 5 6 7 8"`
+	ModeReq
 }
 
 // 羊圈详情
@@ -730,11 +774,19 @@ type FoldDetail struct {
 	PlayerNum uint32 `json:"playerNum"`
 }
 
+// swagger:model ResultFoldInfo
+type ResultFoldInfo struct {
+	// 被选中的羊圈号码
+	FoldNo uint32 `json:"foldNo"`
+}
+
 // 开奖结果详情
 // swagger:model ResultInfo
 type ResultInfo struct {
-	// 中奖羊圈号码
-	FoldNum uint32 `json:"foldNum"`
+	// 开奖类型: 0-未开奖；1-单狼猎杀；2-金羊奖励；3-银羊奖励；4-多狼猎杀
+	Type uint32 `json:"type"`
+	// 中奖羊圈情况
+	Folds []ResultFoldInfo `json:"folds"`
 	// 盈亏数量
 	ProfitAndLoss float32 `json:"profitAndLoss"`
 }
@@ -767,6 +819,7 @@ type RoundInfo struct {
 type RoundReq struct {
 	// 请求的回合ID，默认返回当前回合数据
 	Id *uint64 `json:"id,optional"`
+	ModeReq
 }
 
 // 盘口数据响应
@@ -787,6 +840,7 @@ type InvestRecordInfo struct {
 // swagger:model HistoryListReq
 type HistoryListReq struct {
 	PageInfo
+	ModeReq
 }
 
 // swagger:model HistoryListDataInfo

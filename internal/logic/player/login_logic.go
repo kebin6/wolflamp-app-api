@@ -2,6 +2,8 @@ package player
 
 import (
 	"context"
+	"fmt"
+	"github.com/kebin6/wolflamp-rpc/common/enum/cachekey"
 	"github.com/kebin6/wolflamp-rpc/types/wolflamp"
 	"github.com/suyuan32/simple-admin-common/utils/encrypt"
 	"github.com/suyuan32/simple-admin-common/utils/jwt"
@@ -48,15 +50,11 @@ func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginResp, err erro
 		return nil, errorx.NewCodeInvalidArgumentError("common.wrongPassword")
 	}
 
-	token, err := l.generateToken(info)
+	token, err := l.GenerateToken(info)
 	return &types.LoginResp{
 		Data: types.LoginInfo{
 			Info: types.PlayerInfo{
-				Id:         info.Id,
-				Email:      info.Email,
-				InviteCode: info.InviteCode,
-				Amount:     info.Amount,
-				Lamp:       info.Lamp,
+				Id: info.Id,
 			},
 			Token: *token,
 		},
@@ -64,14 +62,29 @@ func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginResp, err erro
 
 }
 
-// 生成登陆token
-func (l *LoginLogic) generateToken(info *wolflamp.PlayerInfo) (*string, error) {
+// GenerateToken 生成登陆token
+func (l *LoginLogic) GenerateToken(info *wolflamp.PlayerInfo) (*string, error) {
 	token, err := jwt.NewJwtToken(
 		l.svcCtx.Config.Auth.AccessSecret,
 		time.Now().Unix(),
 		l.svcCtx.Config.Auth.AccessExpire,
 		jwt.WithOption("id", info.Id))
 	if err != nil {
+		return nil, err
+	}
+
+	cacheKey := fmt.Sprintf(string(cachekey.GameAuthToken), info.Id)
+	// 先删除旧token
+	err = l.svcCtx.Redis.Del(l.ctx, cacheKey).Err()
+	if err != nil {
+		logx.Errorw("failed to delete token in redis", logx.Field("detail", err))
+		return nil, err
+	}
+
+	// 缓存现有token
+	err = l.svcCtx.Redis.Set(l.ctx, cacheKey, token, time.Duration(l.svcCtx.Config.Auth.AccessExpire)).Err()
+	if err != nil {
+		logx.Errorw("failed to set token in redis", logx.Field("detail", err))
 		return nil, err
 	}
 	return &token, nil

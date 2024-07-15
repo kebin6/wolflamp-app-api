@@ -6,7 +6,7 @@ SIMPLE_LANG: en
 
 Auth:
   AccessSecret: jS6VKDtsJf3z1n2VKDtsJf3z1n2
-  AccessExpire: 86400
+  AccessExpire: 7200
 
 CROSConf:
   Address: '*'
@@ -50,6 +50,7 @@ CasbinConf:
     m = r.sub == p.sub && keyMatch2(r.obj,p.obj) && r.act == p.act
 
 ProjectConf:
+  RedirectGameUrl: "http://47.250.155.55:8888?token=%s"
   EmailCaptchaExpiredTime: 600 # the expired time for email captcha
   ShareLink: "http://47.250.155.55:8888/share?invite=%s"
   Network: "BNB Smart Chain Mainnet"

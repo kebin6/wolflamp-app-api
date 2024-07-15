@@ -7,6 +7,7 @@ import (
 	"github.com/suyuan32/simple-admin-common/i18n"
 	"github.com/zeromicro/go-zero/core/errorx"
 	"google.golang.org/grpc/status"
+	"net/http"
 
 	"github.com/kebin6/wolflamp-app-api/internal/svc"
 	"github.com/kebin6/wolflamp-app-api/internal/types"
@@ -38,7 +39,7 @@ func (l *WalletLogic) Wallet() (resp *types.WalletResp, err error) {
 		return nil, err
 	}
 
-	info, err := l.svcCtx.WolfLampRpc.FindPlayer(l.ctx, &wolflamp.FindPlayerReq{Id: *id})
+	info, err := l.svcCtx.WolfLampRpc.FindPlayer(l.ctx, &wolflamp.FindPlayerReq{Id: id})
 
 	if err != nil {
 		if status.Convert(err).Message() != i18n.TargetNotFound {
@@ -47,23 +48,25 @@ func (l *WalletLogic) Wallet() (resp *types.WalletResp, err error) {
 		return nil, err
 	}
 
-	aggregate, err := l.svcCtx.WolfLampRpc.RewardAggregate(l.ctx, &wolflamp.RewardAggregateReq{ToId: info.Id, GetTotal: true, GetToday: true})
+	balance, err := l.svcCtx.WolfLampRpc.GetGcicsBalance(l.ctx, &wolflamp.GetGcicsBalanceReq{PlayerId: *id})
 	if err != nil {
+		if status.Convert(err).Message() == "Unauthorized" {
+			return nil, errorx.NewApiErrorWithoutMsg(http.StatusUnauthorized)
+		}
 		return nil, err
 	}
+
 	isInit := uint32(2)
 	if info.TransactionPassword != "" {
 		isInit = 1
 	}
 	return &types.WalletResp{
 		Data: types.WalletInfo{
-			IsInit:         isInit,
-			Balance:        info.Amount,
-			Lamp:           info.Lamp,
-			TotalReward:    *aggregate.Total,
-			TodayReward:    *aggregate.Today,
-			Network:        l.svcCtx.Config.ProjectConf.Network,
-			DepositAddress: info.DepositAddress,
+			IsInit:       isInit,
+			CoinBalance:  balance.Coin,
+			TokenBalance: balance.Token,
+			CoinLamb:     info.CoinLamb,
+			TokenLamb:    info.TokenLamb,
 		},
 	}, nil
 }

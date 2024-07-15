@@ -21,16 +21,17 @@ func NewShareLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ShareLogic 
 		Logger: logx.WithContext(ctx),
 		ctx:    ctx,
 		svcCtx: svcCtx}
+
 }
 
 func (l *ShareLogic) Share() (resp *types.ShareResp, err error) {
 
-	info, err := NewPersonInfoLogic(l.ctx, l.svcCtx).PersonInfo()
-	if err != nil {
-		return nil, err
-	}
+	//info, err := NewPersonInfoLogic(l.ctx, l.svcCtx).PersonInfo()
+	//if err != nil {
+	//	return nil, err
+	//}
 
-	shareLink := fmt.Sprintf(l.svcCtx.Config.ProjectConf.ShareLink, info.Data.InviteCode)
+	shareLink := fmt.Sprintf(l.svcCtx.Config.ProjectConf.ShareLink)
 
 	// 生成二维码
 	//var qrcodeImage []byte

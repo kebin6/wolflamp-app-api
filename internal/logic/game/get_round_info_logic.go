@@ -39,7 +39,7 @@ func (l *GetRoundInfoLogic) GetRoundInfo(req *types.RoundReq) (resp *types.Round
 	}
 
 	// 获取当前回合数据
-	round, err := l.svcCtx.WolfLampRpc.FindRound(l.ctx, &wolflamp.FindRoundReq{Id: req.Id})
+	round, err := l.svcCtx.WolfLampRpc.FindRound(l.ctx, &wolflamp.FindRoundReq{Id: req.Id, Mode: req.Mode})
 	if err != nil {
 		if status.Convert(err).Message() == "target does not exist" {
 			return nil, errorx.NewCodeInvalidArgumentError("game.roundNotFound")
@@ -48,7 +48,7 @@ func (l *GetRoundInfoLogic) GetRoundInfo(req *types.RoundReq) (resp *types.Round
 	}
 
 	// 获取当前回合所有投注数据
-	invests, err := l.svcCtx.WolfLampRpc.GetInvestByRoundId(l.ctx, &wolflamp.GetInvestsByRoundIdReq{RoundId: round.Id})
+	invests, err := l.svcCtx.WolfLampRpc.GetInvestByRoundId(l.ctx, &wolflamp.GetInvestsByRoundIdReq{RoundId: round.Id, Mode: req.Mode})
 	if err != nil {
 		return nil, err
 	}
@@ -96,14 +96,14 @@ func (l *GetRoundInfoLogic) GetRoundInfo(req *types.RoundReq) (resp *types.Round
 	}
 
 	// 获取上一回合被选中的羊圈
-	previousRound, err := l.svcCtx.WolfLampRpc.PreviousRound(l.ctx, &wolflamp.Empty{})
+	previousRound, err := l.svcCtx.WolfLampRpc.PreviousRound(l.ctx, &wolflamp.PreviousRoundReq{Mode: req.Mode})
 	if err != nil {
 		return nil, err
 	}
 
 	// 获取当前玩家投注情况
 	investResp, err := l.svcCtx.WolfLampRpc.GetInvestInfoByPlayerId(l.ctx,
-		&wolflamp.GetInvestInfoByPlayerIdReq{PlayerId: *id, RoundId: &round.Id})
+		&wolflamp.GetInvestInfoByPlayerIdReq{PlayerId: *id, RoundId: &round.Id, Mode: req.Mode})
 	if err != nil {
 		return nil, err
 	}
@@ -141,13 +141,15 @@ func (l *GetRoundInfoLogic) GetRoundInfo(req *types.RoundReq) (resp *types.Round
 	}
 
 	// 获取开奖结果
+	var resultFolds []types.ResultFoldInfo
 	resultInfo := types.ResultInfo{
-		FoldNum:       round.SelectedFold,
+		Type:          round.OpenType,
+		Folds:         resultFolds,
 		ProfitAndLoss: 0,
 	}
 	if round.SelectedFold != 0 {
 		playerInvests, err := l.svcCtx.WolfLampRpc.GetInvestInfoByPlayerId(l.ctx,
-			&wolflamp.GetInvestInfoByPlayerIdReq{RoundId: &round.Id, PlayerId: *id})
+			&wolflamp.GetInvestInfoByPlayerIdReq{RoundId: &round.Id, PlayerId: *id, Mode: req.Mode})
 		if err != nil {
 			return nil, err
 		}
@@ -155,6 +157,9 @@ func (l *GetRoundInfoLogic) GetRoundInfo(req *types.RoundReq) (resp *types.Round
 		for _, invest := range playerInvests.Data {
 			profitAndLoss += invest.ProfitAndLoss
 		}
+		resultInfo.Folds = append(resultFolds, types.ResultFoldInfo{
+			FoldNo: round.SelectedFold,
+		})
 		resultInfo.ProfitAndLoss = profitAndLoss
 	}
 
