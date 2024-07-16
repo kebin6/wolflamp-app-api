@@ -2,6 +2,7 @@ package player
 
 import (
 	"context"
+	"encoding/json"
 	"github.com/kebin6/wolflamp-app-api/internal/svc"
 	"github.com/kebin6/wolflamp-app-api/internal/types"
 	"github.com/kebin6/wolflamp-rpc/types/wolflamp"
@@ -25,6 +26,15 @@ func NewNotifyLogic(ctx context.Context, svcCtx *svc.ServiceContext) *NotifyLogi
 }
 
 func (l *NotifyLogic) Notify(req *types.NotifyReq) (resp *types.BaseMsgResp, err error) {
+
+	// 将req转为json字符串
+	reqJson, err := json.Marshal(req)
+	if err != nil {
+		l.Logger.Infof("Notify receive data error: %s", "Invalid Request Parameters")
+		return nil, errorx.NewApiBadRequestError("Invalid Request Parameters")
+	}
+
+	l.Logger.Infof("Notify Receive Data: %s", reqJson)
 	if !l.svcCtx.Config.WolfLampRpc.Enabled {
 		return nil, errorx.NewInternalError("common.wolfLampDisable")
 	}
