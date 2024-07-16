@@ -37,7 +37,7 @@ func (l *ChangeLogic) Change(req *types.InvestChangeReq) (resp *types.BaseDataIn
 	}
 
 	_, err = l.svcCtx.WolfLampRpc.ChangeInvestFold(l.ctx,
-		&wolflamp.ChangeInvestFoldReq{PlayerId: *id, FoldNo: req.FoldNo})
+		&wolflamp.ChangeInvestFoldReq{PlayerId: *id, FoldNo: req.FoldNo, Mode: req.Mode})
 
 	return &types.BaseDataInfo{Code: 0, Msg: i18n.Success}, nil
 

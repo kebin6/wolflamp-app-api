@@ -42,6 +42,7 @@ func (l *ListLogic) List(req *types.ListExchangeReq) (resp *types.ListExchangeRe
 			Page:     req.Page,
 			PageSize: req.PageSize,
 			PlayerId: id,
+			Mode:     req.Mode,
 		})
 	if err != nil {
 		return nil, err

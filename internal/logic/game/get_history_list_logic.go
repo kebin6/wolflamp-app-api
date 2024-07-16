@@ -42,6 +42,7 @@ func (l *GetHistoryListLogic) GetHistoryList(req *types.HistoryListReq) (resp *t
 			Page:     req.Page,
 			PageSize: req.PageSize,
 			PlayerId: id,
+			Mode:     req.Mode,
 		})
 	if err != nil {
 		return nil, err
