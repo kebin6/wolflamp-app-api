@@ -74,6 +74,10 @@ func (l *RedirectLogic) Redirect(req *types.RedirectReq) (resp *types.RedirectRe
 		}
 
 		info = &wolflamp.PlayerInfo{Id: createResp.Id}
+	} else if info != nil {
+		info.GcicsToken = req.Token
+		info.ReturnUrl = req.ReturnUrl
+		l.svcCtx.WolfLampRpc.UpdatePlayer(l.ctx, &wolflamp.UpdatePlayerReq{})
 	}
 
 	// 注册完以后直接登陆
