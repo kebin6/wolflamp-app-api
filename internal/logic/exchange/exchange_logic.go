@@ -40,6 +40,7 @@ func (l *ExchangeLogic) Exchange(req *types.ExchangeReq) (resp *types.ExchangeRe
 		Type:       req.Type,
 		CoinAmount: req.CoinAmount,
 		LampAmount: req.LampAmount,
+		Mode:       req.Mode,
 	})
 	return &types.ExchangeResp{
 		Data: types.ExchangeResult{
