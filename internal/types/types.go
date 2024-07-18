@@ -709,7 +709,7 @@ type InvestReq struct {
 	FoldNo uint32 `json:"foldNo" validate:"required,oneof=1 2 3 4 5 6 7 8"`
 	// 投注数量
 	// required : true
-	LambNum uint32 `json:"lambNum" validate:"required,oneof=1 5 10 20 50 100"`
+	LambNum uint32 `json:"lambNum" validate:"required,oneof=100 300 1000 3000 10000"`
 	ModeReq
 }
 
