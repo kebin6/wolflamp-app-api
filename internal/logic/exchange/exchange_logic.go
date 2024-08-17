@@ -42,6 +42,9 @@ func (l *ExchangeLogic) Exchange(req *types.ExchangeReq) (resp *types.ExchangeRe
 		LampAmount: req.LampAmount,
 		Mode:       req.Mode,
 	})
+	if err != nil {
+		return nil, err
+	}
 	return &types.ExchangeResp{
 		Data: types.ExchangeResult{
 			Id:          rpcResp.Id,

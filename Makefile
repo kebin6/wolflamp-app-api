@@ -29,9 +29,9 @@ SWAGGER_TYPE=json
 # The arch of the build | 构建的架构
 GOARCH=amd64
 
-DOCKER_NAMESPACES=kebin6
-DOCKER_USERNAME=hebinliu6@gmail.com
-DOCKER_PASSWORD=Yrs.5207788
+DOCKER_NAMESPACES=
+DOCKER_USERNAME=
+DOCKER_PASSWORD=
 REPO=hub.docker.com
 DOCKER_PLATFORM=linux/amd64
 
@@ -111,4 +111,3 @@ help: # Show help | 显示帮助
 deploy:
 	make build-linux
 	make docker
-	make publish-docker
