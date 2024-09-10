@@ -50,6 +50,7 @@
 	"game": {
 		"roundNotFound": "game data cannot been found",
 		"lambNotEnough": "lamb count is not enough",
-		"foldNoNotMatch": "only one sheep pen can be bet on at a time"
+		"foldNoNotMatch": "only one sheep pen can be bet on at a time",
+		"investOvertime": "invest disabled",
 	}
 }

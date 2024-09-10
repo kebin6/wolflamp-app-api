@@ -29,7 +29,7 @@ SWAGGER_TYPE=json
 # The arch of the build | 构建的架构
 GOARCH=amd64
 
-DOCKER_NAMESPACES=
+DOCKER_NAMESPACES=kebin6
 DOCKER_USERNAME=
 DOCKER_PASSWORD=
 REPO=hub.docker.com
