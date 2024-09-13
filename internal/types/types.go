@@ -352,6 +352,7 @@ type RedirectReq struct {
 	Token     string `form:"token"`
 	Time      int64  `form:"time"`
 	UserId    uint64 `form:"user_id"`
+	UserName  string `form:"username"`
 	ReturnUrl string `form:"return_url"`
 }
 

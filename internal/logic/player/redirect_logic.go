@@ -67,6 +67,7 @@ func (l *RedirectLogic) Redirect(req *types.RedirectReq) (resp *types.RedirectRe
 			SystemCommission: 0,
 			GcicsUserId:      req.UserId,
 			GcicsToken:       req.Token,
+			GcicsUserName:    req.UserName,
 			ReturnUrl:        req.ReturnUrl,
 		})
 		if err != nil {

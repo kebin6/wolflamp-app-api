@@ -2173,6 +2173,9 @@
         "UserId": {
           "type": "integer",
           "format": "uint64"
+        },
+        "UserName": {
+          "type": "string"
         }
       },
       "x-go-package": "github.com/kebin6/wolflamp-app-api/internal/types"
